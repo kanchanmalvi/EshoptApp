@@ -84,7 +84,7 @@ const UserProfile = ({closeOverlay}) => {
           <Text style={styles.infoText}>NAME : {user?.name}</Text>
         </View>
         <View style={styles.infoView}>
-          <Text style={styles.infoText}>GIVENNAME : {user?.given_name}</Text>
+          <Text style={styles.infoText}>GIVEN-NAME : {user?.given_name}</Text>
         </View>
         <View style={styles.infoView}>
           <Text style={styles.infoText}>EMAIL : {user?.email}</Text>

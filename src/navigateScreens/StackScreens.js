@@ -23,7 +23,7 @@ const Sidebar = () => {
         headerTintColor: 'white',
         headerBackTitle: 'Back',
       }}
-      initialRouteName="homepage">
+      initialRouteName="entrypoint">
       <Stack.Screen
         name="entrypoint"
         component={EntryPoint}
@@ -34,11 +34,11 @@ const Sidebar = () => {
         component={HomePage}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="navbar"
         component={Navbar}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="product"
         component={Product}
@@ -59,16 +59,16 @@ const Sidebar = () => {
         component={AddProductCartDetails}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="about"
         component={About}
         options={{headerShown: false}}
-      />
-      <Stack.Screen
+      /> */}
+      {/* <Stack.Screen
         name="contact"
         component={Contact}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="notificationscreen"
         component={NotificationScrn}

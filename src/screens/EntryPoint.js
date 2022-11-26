@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  ImageBackground,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, ImageBackground} from 'react-native';
 import React from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {useNavigation} from '@react-navigation/native';
@@ -15,7 +8,6 @@ import HomePage from '../components/HomePage';
 const EntryPoint = () => {
   const Navigation = useNavigation();
   const {authorize, user} = useAuth0();
-
 
   const onPress = async () => {
     try {
@@ -76,7 +68,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 30,
-    // backgroundColor:"yellow"
   },
 });
 export default EntryPoint;

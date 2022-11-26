@@ -6,72 +6,59 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import {Button, Card} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
-import {useAuth0} from 'react-native-auth0';
+
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const Navbar = () => {
   const Navigation = useNavigation();
-  const {clearSession, user} = useAuth0();
 
   const onPress = async () => {
-    try {
-      await clearSession();
-      Navigation.navigate('entrypoint');
-      Alert.alert(`😔 ${user.name} is Logout.`);
-    } catch (e) {
-      console.log(e);
-    }
+    Navigation.toggleDrawer();
   };
 
+  const win = Dimensions.get('window');
+
+  const ratio = win.width / 541;
   return (
     <ScrollView>
       <View style={styles.baseStyle}>
-        <View style={styles.baseText}>
-          <Text style={styles.innerText}> 😍 Good To See You</Text>
-          <Text style={styles.innerTextgiven}>{user?.given_name}</Text>
-        </View>
-        <TouchableOpacity>
-          <Button
-            buttonStyle={{
-              backgroundColor: 'red',
+        <Text style={styles.innerText}> 😍 Good To See You</Text>
+        <TouchableOpacity onPress={onPress}>
+          <Icon
+            name="bars"
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              color: 'white',
+              backgroundColor: 'black',
+              padding: 10,
+              borderRadius: 50,
             }}
-            style={[styles.textStyles, styles.btn]}
-            title="Logout"
-            color="error"
-            onPress={onPress}
           />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.navbarStyles}>
-        <TouchableOpacity onPress={() => Navigation.navigate('homepage')}>
-          <Text style={styles.textStyles}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Navigation.navigate('about')}>
-          <Text style={styles.textStyles}>About</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Navigation.navigate('contact')}>
-          <Text style={styles.textStyles}>Contact</Text>
-        </TouchableOpacity>
-      </View>
-
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Image
           source={require('../../Assets/black.webp')}
-          style={{width: 370, height: 500, margin: 10}}
+          style={{width: win.width, height: 362 * ratio}}
+          resizeMode="cover"
         />
 
         <Image
           source={require('../../Assets/cart.jpg')}
-          style={{width: 370, height: 500, margin: 10}}
+          style={{width: win.width, height: 362 * ratio}}
+          resizeMode="cover"
         />
         <Image
           source={require('../../Assets/megasale.webp')}
-          style={{width: 370, height: 500, margin: 10}}
+          style={{width: win.width, height: 362 * ratio}}
+          resizeMode="cover"
         />
       </ScrollView>
 
@@ -136,7 +123,8 @@ const styles = StyleSheet.create({
 
   innerText: {
     color: 'black',
-    fontSize: 25,
+    fontSize: 30,
+    marginTop: 5,
   },
   innerTextgiven: {
     color: 'black',

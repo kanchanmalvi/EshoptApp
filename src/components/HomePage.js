@@ -20,11 +20,12 @@ const HomePage = () => {
           source={require('../../Assets/homepage.jpg')}
           resizeMode="cover"
           style={styles.image}>
-          <Text style={styles.shoptext}>Welcome to Eshop Store</Text>
+          <Text style={styles.shoptext}>Welcome To</Text>
+          <Text style={styles.shopMaintext}> Eshop Store</Text>
           {user && (
             <Text
               style={styles.text}
-              onPress={() => Navigation.navigate('navbar')}>
+              onPress={() => Navigation.navigate('Explore Now')}>
               {user.name}
             </Text>
           )}
@@ -48,20 +49,28 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff0f5',
-    fontSize: 42,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    position: 'absolute',
-    bottom: 20,
-    left: 10,
+    position: 'relative',
+    top: 200,
   },
 
   shoptext: {
     color: 'white',
-    fontSize: 40,
-    textAlign: 'center',
+    fontSize: 35,
+    textAlign: 'left',
     position: 'relative',
-    bottom: 280,
+    bottom: 250,
+    margin: 10,
+  },
+  shopMaintext: {
+    color: 'white',
+    fontSize: 35,
+    textAlign: 'right',
+    position: 'relative',
+    bottom: 260,
+    margin: 10,
   },
 });
 export default HomePage;

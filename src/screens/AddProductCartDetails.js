@@ -19,7 +19,7 @@ const AddProductCartDetails = () => {
   const Navigation = useNavigation();
 
   const cart = useSelector(state => state.cart);
-  // console.log(cart, 'cart');
+  console.log(cart, 'cart');
 
   const dispatch = useDispatch();
 
@@ -79,9 +79,29 @@ const AddProductCartDetails = () => {
                     style={[styles.cartInfoViewstyle, styles.viewStyle]}>
                     <View>
                       <Image
-                        source={require('../../Assets/logo3.png')}
+                        source={{
+                          uri: i?.image[0].url ? i.image[0].url.trim() : '',
+                        }}
                         style={{width: 100, height: 100}}
                       />
+
+                      {/* 
+                      {cart?.cartItem?.image.map((e, i) => {
+                        return (
+                          <Image
+                            key={i} 
+                            source={{uri: e?.url}}
+                            resizeMode="cover"
+                            style={{
+                              width: 200,
+                              height: 200,
+                              margin: 10,
+
+                              borderRadius: 2,
+                            }}
+                          />
+                        );
+                      })} */}
                     </View>
                     <View>
                       <Text style={{fontSize: 15}}>{i.name}</Text>
