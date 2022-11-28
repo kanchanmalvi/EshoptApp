@@ -40,6 +40,11 @@ const AddProductCartDetails = () => {
   useEffect(() => {
     dispatch(getTotal());
   }, [cart, dispatch]);
+
+  const placedOrder = () => {
+    alert('Order Placed Successfully');
+    Navigation.navigate('product');
+  };
   return (
     <ScrollView>
       <View style={styles.cartInfoView}>
@@ -82,35 +87,37 @@ const AddProductCartDetails = () => {
                         source={{
                           uri: i?.image[0].url ? i.image[0].url.trim() : '',
                         }}
-                        style={{width: 100, height: 100}}
+                        style={{width: 90, height: 90}}
                       />
-
-                      {/* 
-                      {cart?.cartItem?.image.map((e, i) => {
-                        return (
-                          <Image
-                            key={i} 
-                            source={{uri: e?.url}}
-                            resizeMode="cover"
-                            style={{
-                              width: 200,
-                              height: 200,
-                              margin: 10,
-
-                              borderRadius: 2,
-                            }}
-                          />
-                        );
-                      })} */}
-                    </View>
-                    <View>
-                      <Text style={{fontSize: 15}}>{i.name}</Text>
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            fontSize: 15,
+                            color: 'black',
+                            width: 80,
+                          }}>
+                          {i.name}
+                        </Text>
+                        <Text
+                          style={{
+                            backgroundColor: i.colors[0],
+                            color: 'transparent',
+                            width: 20,
+                            height: 20,
+                            borderRadius: 10,
+                            marginTop: 4,
+                          }}>
+                          {i.colors[0]}
+                        </Text>
+                      </View>
                       <View>
                         <Text style={{fontSize: 15}}>
                           {<FormatePrice price={i.price} />}
                         </Text>
                       </View>
+                    </View>
 
+                    <View>
                       <View
                         style={{
                           flexDirection: 'row',
@@ -120,46 +127,30 @@ const AddProductCartDetails = () => {
                           display: 'flex',
                           alignItems: 'center',
                         }}>
-                        <View
-                          style={{
-                            backgroundColor: '#9acd32',
-                            padding: 5,
-                            width: 40,
-                            margin: 10,
-                            borderRadius: 4,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{fontSize: 20, color: 'white'}}
-                            onPress={() => decreaseCartIcon(i)}>
-                            -
-                          </Text>
+                        <View>
+                          <TouchableOpacity onPress={() => decreaseCartIcon(i)}>
+                            <Icon name="minussquare" size={30} color="gray" />
+                          </TouchableOpacity>
                         </View>
-                        <Text style={{fontSize: 20}}> {i.cartQuantity}</Text>
-                        <View
-                          style={{
-                            backgroundColor: '#9acd32',
-                            padding: 5,
-                            width: 40,
-                            margin: 10,
-                            borderRadius: 4,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                          }}>
-                          <Text
-                            style={{fontSize: 20, color: 'white'}}
-                            onPress={() => addToCarticon(i)}>
-                            +
-                          </Text>
+                        <Text
+                          style={{fontSize: 18, marginLeft: 5, marginRight: 5}}>
+                          {i.cartQuantity}
+                        </Text>
+                        <View>
+                          <TouchableOpacity onPress={() => addToCarticon(i)}>
+                            <Icon name="plussquare" size={30} color="gray" />
+                          </TouchableOpacity>
                         </View>
                       </View>
                     </View>
 
                     <View>
-                      <Text style={{fontSize: 15}}>
+                      <Text
+                        style={{
+                          fontSize: 19,
+                          color: '#708090',
+                          fontWeight: 'bold',
+                        }}>
                         {<FormatePrice price={i.price * i.cartQuantity} />}
                       </Text>
                     </View>
@@ -175,6 +166,11 @@ const AddProductCartDetails = () => {
                   </View>
                 );
               })}
+              <TouchableOpacity
+                style={styles.btntextContinue}
+                onPress={() => Navigation.navigate('product')}>
+                <Text style={{color: 'white'}}> Continue Shopping</Text>
+              </TouchableOpacity>
             </View>
 
             <View style={{margin: 10}}>
@@ -187,49 +183,45 @@ const AddProductCartDetails = () => {
                 </Text>
               </View>
               <View style={styles.btnStyle}>
-                <Text> Total items</Text>
+                <Text style={{fontSize: 15, position: 'relative', right: 5}}>
+                  {' '}
+                  Total items
+                </Text>
                 <Text style={{textAlign: 'right'}}>{cart?.totalQuantity}</Text>
               </View>
 
               <View style={styles.btnStyle}>
-                <Text style={styles.xyz}>Shipping</Text>
+                <Text style={{fontSize: 15}}>Shipping</Text>
                 <Text style>Free</Text>
               </View>
 
               <View style={styles.btnStyle}>
-                <Text style={styles.containertext}>Subtotal</Text>
+                <Text style={{fontSize: 15}}>Subtotal</Text>
                 <Text
                   style={{fontSize: 15, color: 'black', fontWeight: 'bold'}}>
                   {cart?.totalAmount}
                 </Text>
               </View>
 
-              <View>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <TouchableOpacity
+                  style={styles.btntextClear}
+                  onPress={() => dispatch(clearCart())}>
+                  <Text style={{color: 'white'}}> Clear Cart</Text>
+                </TouchableOpacity>
                 <Button
                   title="Place order"
                   containerStyle={{
                     height: 40,
                   }}
-                  buttonStyle={{backgroundColor: '#daa520'}}
+                  buttonStyle={{backgroundColor: '#ED8F03', borderRadius: 5}}
                   titleStyle={{
-                    color: 'white',
+                    color: 'black',
                   }}
+                  onPress={placedOrder}
                 />
               </View>
-            </View>
-
-            <View style={styles.btnStyle}>
-              <TouchableOpacity
-                style={styles.btntextContinue}
-                onPress={() => Navigation.navigate('product')}>
-                <Text style={{color: 'white'}}> Continue Shopping</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.btntextClear}
-                onPress={() => dispatch(clearCart())}>
-                <Text style={{color: 'white'}}> Clear Cart</Text>
-              </TouchableOpacity>
             </View>
           </View>
         )}
@@ -264,9 +256,7 @@ const styles = StyleSheet.create({
     top: 22,
     left: 10,
   },
-  containertext: {
-    color: 'gray',
-  },
+
   cartInfo: {
     textAlign: 'center',
     color: 'white',
@@ -281,7 +271,7 @@ const styles = StyleSheet.create({
   cartInfoViewstyle: {
     backgroundColor: 'white',
     margin: 5,
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
   },
   btnStyle: {
@@ -293,6 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4C4646',
     padding: 10,
     borderRadius: 5,
+    margin: 10,
   },
   btntextClear: {
     backgroundColor: '#ff6347',
@@ -302,11 +293,9 @@ const styles = StyleSheet.create({
   pricedetail: {
     backgroundColor: 'white',
     padding: 10,
-    margin: 10,
-    borderRadius: 5,
   },
   placebtncolor: {
-    backgroundColor: 'yellow',
+    backgroundColor: 'white',
   },
   emptyCart: {
     display: 'flex',
@@ -317,3 +306,5 @@ const styles = StyleSheet.create({
   },
 });
 export default AddProductCartDetails;
+
+// icon color #9acd32
