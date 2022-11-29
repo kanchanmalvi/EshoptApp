@@ -9,20 +9,20 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      // console.log(typeof state.cartItem, 'serachbyname');
+      console.log(action?.payload, 'serachbyname');
       // console.log(action, 'existItemAction');
       const existItem = state.cartItem.findIndex(
-        data => data.id === action.payload.product.id
+        data => data?.id === action?.payload?.id,
       );
-      // console.log(existItem, 'existItem');
+      console.log(existItem, 'existItem');
 
       if (existItem >= 0) {
         state.cartItem[existItem] = {
           ...state.cartItem[existItem],
-          cartQuantity: state.cartItem[existItem].cartQuantity + 1,
+          cartQuantity: state.cartItem[existItem]?.cartQuantity + 1,
         };
       } else {
-        const aa = {...action.payload.product, cartQuantity: 1};
+        const aa = {...action.payload, cartQuantity: 1};
         state.cartItem.push(aa);
       }
     },

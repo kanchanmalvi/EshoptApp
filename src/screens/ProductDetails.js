@@ -24,13 +24,12 @@ const ProductDetails = ({route}) => {
   const dispatch = useDispatch();
   const Navigation = useNavigation();
   const prodetails = useSelector(state => state.productDetails);
-  console.log(prodetails, 'prodetails');
-
+  
   const id = route.params?.id;
   useEffect(() => {
     dispatch(detailApi(id));
   }, []);
-
+  
   const {
     color,
     image,
@@ -42,17 +41,17 @@ const ProductDetails = ({route}) => {
     stock,
     price,
   } = prodetails?.product;
-
-  const addcart = p => {
-    dispatch(addToCart(p));
+  
+  const addcart = p => {   
+    dispatch(addToCart(p?.product));
     Navigation.navigate('shoppingcart', {id: id});
     ToastAndroid.showWithGravity(
       'ITEM ADDED TO THE CART',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER,
-    );
-  };
-
+      );
+    };
+    
   return (
     <ScrollView>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>

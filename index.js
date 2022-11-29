@@ -8,6 +8,7 @@ import persistStore from 'redux-persist/es/persistStore';
 import {PersistGate} from 'redux-persist/integration/react';
 import {Auth0Provider} from 'react-native-auth0';
 import 'react-native-gesture-handler';
+import {enableLatestRenderer} from 'react-native-maps';
 
 let persistor = persistStore(store);
 
@@ -23,8 +24,7 @@ export default function Main() {
   return (
     <Auth0Provider
       domain={'dev-y6c3wtqtqxnuduf7.us.auth0.com'}
-      clientId={'dI1VbCZyvB3zZ7XEYZPRx0ujFHgre12i'}
-     >
+      clientId={'dI1VbCZyvB3zZ7XEYZPRx0ujFHgre12i'}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <PersistGate persistor={persistor}>
@@ -37,3 +37,4 @@ export default function Main() {
 }
 
 AppRegistry.registerComponent(appName, () => Main);
+enableLatestRenderer();

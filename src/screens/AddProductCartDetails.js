@@ -57,8 +57,9 @@ const AddProductCartDetails = () => {
       <View style={styles.cartInfoView}>
         <Icon
           name="arrowleft"
-          style={styles.lefticonStyle}
+          style={{...styles.lefticonStyle, paddingHorizontal: 10, zIndex: 100}}
           onPress={productDetailspage}
+          size={25}
         />
 
         <Text style={styles.cartInfo}>Cart Info</Text>
@@ -92,7 +93,7 @@ const AddProductCartDetails = () => {
                     <View>
                       <Image
                         source={{
-                          uri: i?.image[0].url ? i.image[0].url.trim() : '',
+                          uri: i?.image?.[0]?.url ? i?.image[0].url.trim() : '',
                         }}
                         style={{width: 90, height: 90}}
                       />
@@ -103,23 +104,23 @@ const AddProductCartDetails = () => {
                             color: 'black',
                             width: 80,
                           }}>
-                          {i.name}
+                          {i?.name}
                         </Text>
                         <Text
                           style={{
-                            backgroundColor: i.colors[0],
+                            backgroundColor: i?.colors?.[0],
                             color: 'transparent',
                             width: 20,
                             height: 20,
                             borderRadius: 10,
                             marginTop: 4,
                           }}>
-                          {i.colors[0]}
+                          {i?.colors?.[0]}
                         </Text>
                       </View>
                       <View>
                         <Text style={{fontSize: 15}}>
-                          {<FormatePrice price={i.price} />}
+                          {<FormatePrice price={i?.price} />}
                         </Text>
                       </View>
                     </View>
@@ -141,8 +142,9 @@ const AddProductCartDetails = () => {
                         </View>
                         <Text
                           style={{fontSize: 18, marginLeft: 5, marginRight: 5}}>
-                          {i.cartQuantity}
+                          {i?.cartQuantity}
                         </Text>
+
                         <View>
                           <TouchableOpacity onPress={() => addToCarticon(i)}>
                             <Icon name="plussquare" size={30} color="gray" />
@@ -158,7 +160,7 @@ const AddProductCartDetails = () => {
                           color: '#708090',
                           fontWeight: 'bold',
                         }}>
-                        {<FormatePrice price={i.price * i.cartQuantity} />}
+                        {<FormatePrice price={i?.price * i?.cartQuantity} />}
                       </Text>
                     </View>
                     <View>
@@ -166,7 +168,7 @@ const AddProductCartDetails = () => {
                         <Icon
                           name="delete"
                           style={styles.iconStyle}
-                          onPress={() => removeproduct(i.id)}
+                          onPress={() => removeproduct(i?.id)}
                         />
                       </TouchableOpacity>
                     </View>
