@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {testapi} from '../features/AllProducts/allProductsSlice';
@@ -38,7 +39,9 @@ const Product = () => {
       <View>
         {product.sortingProduct?.length === 0 ? (
           <View>
-            <Text>No Product found</Text>
+            <Text>
+              <ActivityIndicator />
+            </Text>
           </View>
         ) : (
           <View>
@@ -130,14 +133,17 @@ const Product = () => {
                             }}>
                             View Details
                           </Text>
+                       
                         </TouchableOpacity>
                       </View>
                     </View>
                   );
                 })}
             </View>
+       
           </View>
         )}
+    
       </View>
     </ScrollView>
   );

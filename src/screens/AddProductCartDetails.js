@@ -184,7 +184,6 @@ const AddProductCartDetails = () => {
               </View>
               <View style={styles.btnStyle}>
                 <Text style={{fontSize: 15, position: 'relative', right: 5}}>
-                  {' '}
                   Total items
                 </Text>
                 <Text style={{textAlign: 'right'}}>{cart?.totalQuantity}</Text>
@@ -199,7 +198,7 @@ const AddProductCartDetails = () => {
                 <Text style={{fontSize: 15}}>Subtotal</Text>
                 <Text
                   style={{fontSize: 15, color: 'black', fontWeight: 'bold'}}>
-                  {cart?.totalAmount}
+                  <FormatePrice price={cart?.totalAmount} />
                 </Text>
               </View>
 

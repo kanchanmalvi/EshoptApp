@@ -8,7 +8,6 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useAuth0} from 'react-native-auth0';
 
 const CustomSidebarMenu = props => {
-
   const {clearSession, user} = useAuth0();
   const onPress = async () => {
     try {
@@ -42,7 +41,7 @@ const CustomSidebarMenu = props => {
             color: 'white',
             marginBottom: 15,
           }}>
-         {user?.given_name}
+          {user?.given_name}
         </Text>
       </View>
 
@@ -72,8 +71,7 @@ const CustomSidebarMenu = props => {
             fontWeight: 'bold',
             color: 'white',
           }}
-          onPress={onPress}
-          >
+          onPress={onPress}>
           Logout
         </Text>
       </View>

@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
       // console.log(typeof state.cartItem, 'serachbyname');
       // console.log(action, 'existItemAction');
       const existItem = state.cartItem.findIndex(
-        data => data.id === action.payload.product.id,
+        data => data.id === action.payload.product.id
       );
       // console.log(existItem, 'existItem');
 
@@ -68,7 +68,7 @@ export const cartSlice = createSlice({
       );
       total = parseFloat(total.toFixed(2));
       state.totalQuantity = quantity;
-      state.totalAmount = total;
+      state.totalAmount = parseFloat(total.toFixed(2));
     },
   },
 

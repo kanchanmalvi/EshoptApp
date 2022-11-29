@@ -28,55 +28,64 @@ const FeaturedProductList = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       {product?.products
-        ?.filter(e => e.featured === true)  
+        ?.filter(e => e.featured === true)
         .map((data, id) => {
           return (
-            <View style={styles.productImageContent}>
+            <View style={styles.productImageContent} key={id}>
               <View
                 style={{
-                  width: '50%',
+                  width: '100%',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  backgroundColor: '#9e9e9e38',
+                  backgroundColor: 'white',
+                  marginBottom: 10,
                 }}>
-                <Image
-                  source={{uri: data.image}}
-                  style={{width: 150, height: 150, margin: 10}}
-                />
-              </View>
-              <View style={{width: '50%'}}>
-                <Text
+                <View
                   style={{
-                    textAlign: 'center',
-                    fontSize: 20,
-                    color: 'black',
-                    marginTop: 5,
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 3,
                   }}>
-                  {data.name}
-                </Text>
-                <Text style={{textAlign: 'center'}}>{data.company}</Text>
+                  <Image
+                    source={{uri: data.image}}
+                    style={{width: 250, height: 200, margin: 10}}
+                  />
+                </View>
 
-                <Text style={{textAlign: 'center'}}>
-                  {data.description.slice(0, 28)}...
-                </Text>
+                <View style={{width: '50%'}}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 20,
+                      color: 'black',
+                      marginTop: 5,
+                    }}>
+                    {data.name}
+                  </Text>
+                  <Text style={{textAlign: 'center'}}>{data.company}</Text>
 
-                <Text
-                  style={{
-                    color: '#5f9ea0',
-                    margin: 10,
-                    textAlign: 'center',
-                  }}>
-                  {<FormatePrice price={data.price} />}
-                </Text>
+                  <Text style={{textAlign: 'center'}}>
+                    {data.description.slice(0, 48)}...
+                  </Text>
+
+                  <Text
+                    style={{
+                      color: '#5f9ea0',
+                      margin: 10,
+                      textAlign: 'center',
+                    }}>
+                    {<FormatePrice price={data.price} />}
+                  </Text>
+                </View>
+
                 <TouchableOpacity style={styles.btnStyle}>
                   <Text
                     onPress={() => productDetails(data.id)}
                     style={{
                       textAlign: 'center',
-                      fontSize: 15,
+                      fontSize: 18,
                       color: 'white',
                     }}>
                     View Details
@@ -86,7 +95,7 @@ const FeaturedProductList = () => {
             </View>
           );
         })}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -104,6 +113,49 @@ const styles = StyleSheet.create({
     backgroundColor: '#48d1cc',
     margin: 10,
     padding: 10,
+  },
+
+  productImageContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    flexWrap: 'wrap',
+
+    borderWidth: 0.5,
+    borderColor: '#556b2f',
+  },
+  btnStyle: {
+    // backgroundColor: '#48d1cc',
+    backgroundColor: '#E0D72E',
+    margin: 10,
+    padding: 10,
+    width: '80%',
+  },
+  heading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    backgroundColor: 'white',
+  },
+  SearchIconStyleView: {
+    backgroundColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  SearchIconStyle: {
+    margin: 10,
+    color: 'white',
+    borderRightWidth: 2,
+    borderColor: 'white',
+    padding: 5,
+  },
+  // for Modal style
+
+  modalView: {
+    backgroundColor: 'white',
+    height: '100%',
   },
 });
 export default FeaturedProductList;
