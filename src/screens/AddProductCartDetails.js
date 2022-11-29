@@ -14,8 +14,10 @@ import {
 } from '../features/AddToCart/cartSlice';
 import FormatePrice from '../helpers/FormatePrice';
 import {useNavigation} from '@react-navigation/native';
+import {Overlay} from 'react-native-elements';
 
 const AddProductCartDetails = () => {
+  const [visible, setVisible] = useState(false);
   const Navigation = useNavigation();
 
   const cart = useSelector(state => state.cart);
@@ -42,9 +44,14 @@ const AddProductCartDetails = () => {
   }, [cart, dispatch]);
 
   const placedOrder = () => {
-    alert('Order Placed Successfully');
-    Navigation.navigate('product');
+    dispatch(clearCart());
+    setVisible(!visible);
+    Alert.alert('Order Placed Successfully');
   };
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
+
   return (
     <ScrollView>
       <View style={styles.cartInfoView}>
@@ -218,12 +225,34 @@ const AddProductCartDetails = () => {
                   titleStyle={{
                     color: 'black',
                   }}
-                  onPress={placedOrder}
+                  onPress={toggleOverlay}
                 />
               </View>
             </View>
           </View>
         )}
+        {/* USER PROFILE MODAL/OVERLAY*/}
+        <Overlay
+          style={{height: '100%', padding: 10}}
+          isVisible={visible}
+          onBackdropPress={toggleOverlay}>
+          <Text style={{fontSize: 20, color: 'gray'}}>
+            {' '}
+            Do You Want To Place This Order
+          </Text>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Text
+              onPress={toggleOverlay}
+              style={{fontSize: 20, color: 'red', margin: 10}}>
+              Cancel
+            </Text>
+            <Text
+              onPress={placedOrder}
+              style={{fontSize: 20, color: 'black', margin: 10}}>
+              Ok
+            </Text>
+          </View>
+        </Overlay>
       </View>
     </ScrollView>
   );

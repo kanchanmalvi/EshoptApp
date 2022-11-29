@@ -38,7 +38,7 @@ const Product = () => {
     <ScrollView>
       <View>
         {product.sortingProduct?.length === 0 ? (
-          <View>
+          <View style={styles.loader}>
             <Text>
               <ActivityIndicator />
             </Text>
@@ -112,15 +112,6 @@ const Product = () => {
                             }}>
                             {<FormatePrice price={data.price} />}
                           </Text>
-                          {/* <Text
-                            style={{
-                              textDecorationLine: 'line-through',
-                              textDecorationStyle: 'solid',
-                              fontSize: 20,
-                              fontWeight: 'bold',
-                            }}>
-                            $12
-                          </Text> */}
                         </View>
 
                         <TouchableOpacity style={styles.btnStyle}>
@@ -133,17 +124,14 @@ const Product = () => {
                             }}>
                             View Details
                           </Text>
-                       
                         </TouchableOpacity>
                       </View>
                     </View>
                   );
                 })}
             </View>
-       
           </View>
         )}
-    
       </View>
     </ScrollView>
   );
@@ -164,6 +152,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     width: '80%',
+    borderRadius: 5,
   },
   heading: {
     flexDirection: 'row',
@@ -190,6 +179,13 @@ const styles = StyleSheet.create({
 
   modalView: {
     backgroundColor: 'white',
+    height: '100%',
+  },
+  loader: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
     height: '100%',
   },
 });
