@@ -29,6 +29,10 @@ const FeaturedProductList = () => {
 
   return (
     <ScrollView>
+      <View>
+        <Text style={{textAlign:"left", fontSize:25, fontWeight:"bold", color:"black", margin:10}}>Featured Product</Text>
+      </View>
+
       {product?.products
         ?.filter(e => e.featured === true)
         .map((data, id) => {

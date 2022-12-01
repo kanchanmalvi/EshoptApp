@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {Tab, Text, TabView, BottomSheet, Button, ListItem} from '@rneui/themed';
 import {Card} from 'react-native-elements';
 import {useSelector, useDispatch} from 'react-redux';
@@ -7,14 +13,18 @@ import FormatePrice from '../helpers/FormatePrice';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {clearWishList} from '../features/AddToCart/wishListSlice';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 const FavoriteScrn = () => {
   const [index, setIndex] = React.useState(0);
-
   const [isVisible, setIsVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
   const wishlist = useSelector(state => state.wishList);
-  console.log(wishlist, 'wishLisTDATA');
+
+  const Navigation = useNavigation();
 
   const onPress = () => {
     setIsVisible(false);
@@ -24,7 +34,6 @@ const FavoriteScrn = () => {
     setIsVisible(false);
   };
 
-  const dispatch = useDispatch();
   return (
     <>
       <Text
@@ -51,70 +60,113 @@ const FavoriteScrn = () => {
         />
       </Tab>
 
-      <ScrollView>
-        {wishlist?.wishlistItem?.map((i, id) => {
-          return (
-            <View style={styles.cardflex} key={id}>
-              <View>
-                <Image
-                  source={{
-                    uri: i?.image?.[0]?.url ? i?.image[0].url.trim() : '',
-                  }}
-                  style={{width: 60, height: 60, borderRadius: 30}}
+      {wishlist?.wishlistItem?.length === 0 ? (
+        <View style={styles.emptywishlist}>
+          <Text style={{fontSize: 20, color: 'black', marginBottom: 10}}>
+            No Item In The Wishlist
+          </Text>
+          <View>
+            <TouchableOpacity
+              style={styles.btntextContinue}
+              onPress={() => Navigation.navigate('product')}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-evenly',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                <AntDesign
+                  name="arrowleft"
+                  style={{fontSize: 18, color: 'white', marginRight: 10}}
+                  color="black"
                 />
-              </View>
-              <View>
-                <Text style={{textAlign: 'center'}}>{i.name}</Text>
-                <Text style={{textAlign: 'center'}}>
-                  {<FormatePrice price={i?.price} />}
+                <Text style={{color: 'white', fontSize: 18, margin: 10}}>
+                  Continue Shopping
                 </Text>
               </View>
-
-              <View>
-                <Text style={{}}>{i.company}</Text>
-              </View>
-              <View>
-                <Text style={{}}>
-                  <Entypo
-                    name="dots-three-vertical"
-                    size={20}
-                    onPress={() => setIsVisible(true)}
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <ScrollView>
+          {wishlist?.wishlistItem?.map((i, id) => {
+            return (
+              <View style={styles.cardflex} key={id}>
+                <View>
+                  <Image
+                    source={{
+                      uri: i?.image?.[0]?.url ? i?.image[0].url.trim() : '',
+                    }}
+                    style={{width: 60, height: 60, borderRadius: 30}}
                   />
-                </Text>
+                </View>
+                <View>
+                  <Text style={{textAlign: 'center'}}>{i.name}</Text>
+                  <Text style={{textAlign: 'center'}}>
+                    {<FormatePrice price={i?.price} />}
+                  </Text>
+                </View>
+
+                <View>
+                  <Text style={{}}>{i.company}</Text>
+                </View>
+                <View>
+                  <Text style={{}}>
+                    <Entypo
+                      name="dots-three-vertical"
+                      size={20}
+                      onPress={() => setIsVisible(true)}
+                    />
+                  </Text>
+                </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
 
-        <SafeAreaProvider>
-          <BottomSheet modalProps={{}} isVisible={isVisible}>
-            <ListItem>
-              <ListItem.Content>
-                <ListItem.Title
-                  style={{paddingTop: 20}}
-                  onPress={clearWishlist}>
-                  Clear Wishlist
-                </ListItem.Title>
-                <ListItem.Title style={{paddingTop: 20}}>
-                  Add To Cart
-                </ListItem.Title>
-              </ListItem.Content>
-            </ListItem>
+          <SafeAreaProvider>
+            <BottomSheet modalProps={{}} isVisible={isVisible}>
+              <ListItem>
+                <ListItem.Content>
+                  <ListItem.Title
+                    style={{paddingTop: 20, fontSize: 17, color: 'black'}}
+                    onPress={clearWishlist}>
+                    <AntDesign
+                      name="delete"
+                      style={{fontSize: 18, marginTop: 10}}
+                      color="red"
+                    />{' '}
+                    Clear Wishlist
+                  </ListItem.Title>
+                  <ListItem.Title
+                    style={{paddingTop: 20, color: 'black'}}
+                    onPress={() => Navigation.navigate('product')}>
+                    <AntDesign
+                      name="arrowleft"
+                      style={{fontSize: 18, marginTop: 15}}
+                      color="black"
+                    />
+                    Continue Shopping
+                  </ListItem.Title>
+                </ListItem.Content>
+              </ListItem>
 
-            <ListItem.Title
-              style={{
-                backgroundColor: 'red',
-                padding: 15,
-                margin: 0,
-                width: '100%',
-                color: 'white',
-              }}
-              onPress={onPress}>
-              Cancel
-            </ListItem.Title>
-          </BottomSheet>
-        </SafeAreaProvider>
-      </ScrollView>
+              <ListItem.Title
+                style={{
+                  backgroundColor: 'red',
+                  padding: 15,
+                  margin: 0,
+                  width: '100%',
+                  color: 'white',
+                  fontSize: 20,
+                }}
+                onPress={onPress}>
+                Cancel
+              </ListItem.Title>
+            </BottomSheet>
+          </SafeAreaProvider>
+        </ScrollView>
+      )}
     </>
   );
 };
@@ -131,6 +183,19 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
+  },
+  emptywishlist: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    marginTop: 200,
+  },
+  btntextContinue: {
+    backgroundColor: 'gray',
+    padding: 5,
+    borderRadius: 5,
+    margin: 5,
   },
 });
 export default FavoriteScrn;

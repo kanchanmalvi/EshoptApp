@@ -7,9 +7,22 @@ import DropdownComponent from '../components/DropdownComponent';
 const TabBar = () => {
   return (
     <View>
-      <View style={styles.Dropdown}><DropdownComponent /></View>
+      <View style={styles.Dropdown}>
+        <DropdownComponent />
+      </View>
 
-      <View style={styles.sortingViewStyle}>{/* <Sorting /> */}</View>
+      <View>
+        <Text
+          style={{
+            textAlign: 'left',
+            fontSize: 20,
+            color: 'black',
+            fontWeight: 'bold',
+            margin: 10,
+          }}>
+          All Products
+        </Text>
+      </View>
     </View>
   );
 };

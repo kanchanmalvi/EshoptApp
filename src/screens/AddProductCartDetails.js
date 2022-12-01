@@ -76,10 +76,22 @@ const AddProductCartDetails = () => {
               <TouchableOpacity
                 style={styles.btntextContinue}
                 onPress={() => Navigation.navigate('product')}>
-                <Text style={{color: 'white'}}>
-                  <Icon name="arrowleft" style={{fontSize: 15}} />
-                  Continue Shopping
-                </Text>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                  }}>
+                  <Icon
+                    name="arrowleft"
+                    style={{fontSize: 18, color: 'white', marginRight: 10}}
+                    color="black"
+                  />
+                  <Text style={{color: 'white', fontSize: 18, margin: 10}}>
+                    Continue Shopping
+                  </Text>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -311,10 +323,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   btntextContinue: {
-    backgroundColor: '#4C4646',
-    padding: 10,
+    backgroundColor: 'gray',
+    padding: 5,
     borderRadius: 5,
-    margin: 10,
+    margin: 5,
   },
   btntextClear: {
     backgroundColor: '#ff6347',

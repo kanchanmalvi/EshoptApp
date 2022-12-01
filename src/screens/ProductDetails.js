@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   addToCart: {
-    backgroundColor: '#48d1cc',
+    backgroundColor: '#9acd32',
     padding: 10,
     margin: 10,
     color: 'white',
@@ -187,3 +187,4 @@ export default ProductDetails;
 //  ToastAndroid.CENTER,
 // );
 //};
+// backgroundColor: '#48d1cc',
