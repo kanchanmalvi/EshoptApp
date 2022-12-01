@@ -3,23 +3,9 @@ import {StyleSheet, View, Text} from 'react-native';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 const AddToCart = ({product}) => {
-  const {colors, stock} = product;
-  const [color, setColor] = useState(colors[0]);
-
-  // const [amount, setAmount] = useState(0);
-
-  {
-    /* Product add to cart*/
-  }
-
-  // const increaseValue = () => {
-  //   amount < stock ? setAmount(amount + 1) : setAmount(stock);
-  // };
-  // const decreaseValue = () => {
-  //   amount > 1 ? setAmount(amount - 1) : setAmount(1);
-  // };
+  const {colors} = product;
+  const [color, setColor] = useState(colors?.[0]);
 
   return (
     <View>
@@ -27,7 +13,7 @@ const AddToCart = ({product}) => {
         <Text style={{color: '#778899', fontSize: 16, margin: 5}}>
           Colors :
         </Text>
-        {colors.map((clr, index) => {
+        {colors?.map((clr, index) => {
           return (
             <View key={index}>
               <Button
@@ -47,13 +33,6 @@ const AddToCart = ({product}) => {
           );
         })}
       </View>
-
-      {/* Product add to cart*/}
-
-      {/* <ProductAddToCart /> */}
-      {/* // amount={amount}
-        // increaseValue={increaseValue}
-        // decreaseValue={decreaseValue} */}
     </View>
   );
 };

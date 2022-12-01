@@ -5,14 +5,15 @@ import {Overlay} from 'react-native-elements';
 import UserProfile from './UserProfile';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Footer = () => {
   const [visible, setVisible] = useState(false);
 
   const navigation = useNavigation();
 
-  const getNotification = () => {
-    navigation.navigate('notificationscreen');
+  const getfavorite = () => {
+    navigation.navigate('favoritescrn');
   };
 
   const homePage = () => {
@@ -29,22 +30,30 @@ const Footer = () => {
 
   const cart = useSelector(state => state.cart);
 
+  const wishlist = useSelector(state => state.wishList);
+  console.log(wishlist, 'wishlist');
+
   return (
     <View>
       <View style={styles.footerIcon}>
         <Text style={styles.texticonstyle}>
           <Icon name="home" style={styles.iconStyle} onPress={homePage} />
         </Text>
-        <Text style={styles.texticonstyle}>
-          <Icon
-            name="bell"
+        <View style={{position: 'relative'}}>
+          <MaterialIcons
+            name="favorite"
             style={styles.iconStyle}
-            onPress={getNotification}
+            onPress={getfavorite}
           />
-        </Text>
+          <View style={{}}>
+            <Text style={styles.favoriteiconStyle}>
+              {wishlist?.wishlistItem?.length}
+            </Text>
+          </View>
+        </View>
 
         <View style={{position: 'relative'}}>
-          <Icon
+          <Icon 
             name="cart-plus"
             style={styles.iconStyle}
             onPress={shoppingcart}
@@ -80,6 +89,23 @@ const styles = StyleSheet.create({
   iconStyle: {
     fontSize: 23,
     color: '#708090',
+  },
+  favoriteiconStyle: {
+    position: 'absolute',
+    left: 16,
+    bottom: 10,
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: 'red',
+    borderRadius: 3,
+    width: 22,
+    height: 22,
+    borderRadius: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'white',
   },
   cartlength: {
     position: 'absolute',

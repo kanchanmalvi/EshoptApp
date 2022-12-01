@@ -8,7 +8,7 @@ import FeaturedProductList from '../screens/FeaturedProductList';
 import ProductDetails from '../screens/ProductDetails';
 import AddProductCartDetails from '../screens/AddProductCartDetails';
 import Contact from '../components/Contact';
-import NotificationScrn from '../screens/NotificationScrn';
+import FavoriteScrn from '../screens/FavoriteScrn';
 import EntryPoint from '../screens/EntryPoint';
 
 const Stack = createNativeStackNavigator();
@@ -70,8 +70,8 @@ const Sidebar = () => {
         options={{headerShown: false}}
       /> */}
       <Stack.Screen
-        name="notificationscreen"
-        component={NotificationScrn}
+        name="favoritescrn"
+        component={FavoriteScrn}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

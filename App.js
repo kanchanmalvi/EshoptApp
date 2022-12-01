@@ -1,7 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-
 import {useAuth0} from 'react-native-auth0';
 import DrawerSide from './src/navigateScreens/DrawerSidebar';
 import Footer from './src/components/Footer';

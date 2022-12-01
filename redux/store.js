@@ -1,13 +1,14 @@
 import {configureStore} from '@reduxjs/toolkit';
 import counterReducer from '../src/features/counterSlice';
 import allProductsReducer from '../src/features/AllProducts/allProductsSlice';
-import detailProductsSlice from '../src/features/ProductDetails/detailsSlice';
+import detailProductsReducer from '../src/features/ProductDetails/detailsSlice';
 import cartReducer from '../src/features/AddToCart/cartSlice';
 import {combineReducers} from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import searchReducer from '../src/features/SearchingData/searchSlice';
+import wishListReducer from '../src/features/AddToCart/wishListSlice';
 
 const persistConfig = {
   key: 'root',
@@ -18,8 +19,8 @@ const rootReducer = combineReducers({
   products: allProductsReducer,
   cart: cartReducer,
   counter: counterReducer,
-  productDetails: detailProductsSlice,  
-  search: searchReducer,
+  productDetails: detailProductsReducer,
+  wishList:wishListReducer
 });
 
 let persistedReducer = persistReducer(persistConfig, rootReducer);

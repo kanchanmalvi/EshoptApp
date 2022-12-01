@@ -98,7 +98,6 @@ const Navbar = () => {
             onPress={() => Navigation.navigate('featuredproducts')}
           />
         </Card>
-        <Text onPress={() => Navigation.navigate('Contact Us')}> about us</Text>
       </View>
     </ScrollView>
   );

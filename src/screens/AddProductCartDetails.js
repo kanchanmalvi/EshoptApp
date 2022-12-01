@@ -12,6 +12,7 @@ import {
   getTotal,
   remove,
 } from '../features/AddToCart/cartSlice';
+
 import FormatePrice from '../helpers/FormatePrice';
 import {useNavigation} from '@react-navigation/native';
 import {Overlay} from 'react-native-elements';
@@ -21,7 +22,7 @@ const AddProductCartDetails = () => {
   const Navigation = useNavigation();
 
   const cart = useSelector(state => state.cart);
-  console.log(cart, 'cart');
+  console.log(cart, 'cartcart');
 
   const dispatch = useDispatch();
 

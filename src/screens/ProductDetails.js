@@ -6,7 +6,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  ActivityIndicator,
   ToastAndroid,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -18,40 +17,44 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {detailApi} from '../features/ProductDetails/detailsSlice';
 import {addToCart} from '../features/AddToCart/cartSlice';
-// import ProductAddToCart from './ProductAddToCart';
+
+import {addtoWishList} from '../features/AddToCart/wishListSlice';
 
 const ProductDetails = ({route}) => {
   const dispatch = useDispatch();
   const Navigation = useNavigation();
   const prodetails = useSelector(state => state.productDetails);
-  
+
   const id = route.params?.id;
   useEffect(() => {
     dispatch(detailApi(id));
   }, []);
-  
-  const {
-    color,
-    image,
-    name,
-    company,
-    stars,
-    reviews,
-    description,
-    stock,
-    price,
-  } = prodetails?.product;
-  
-  const addcart = p => {   
+
+  const {image, name, company, stars, reviews, description, stock, price} =
+    prodetails?.product;
+
+  const addcart = p => {
+    console.log(p, 'dhfgytdffffffffff');
     dispatch(addToCart(p?.product));
     Navigation.navigate('shoppingcart', {id: id});
     ToastAndroid.showWithGravity(
       'ITEM ADDED TO THE CART',
       ToastAndroid.SHORT,
       ToastAndroid.CENTER,
-      );
-    };
-    
+    );
+  };
+
+  const addwishlist = p => {
+    console.log(p, 'ADDED PRODUCT TO WISHLIST');
+    dispatch(addtoWishList(p?.product));
+    Navigation.navigate('favoritescrn', {id: id});
+    ToastAndroid.showWithGravity(
+      'ITEM ADDED TO THE WISHLIST',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+  };
+
   return (
     <ScrollView>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -66,7 +69,6 @@ const ProductDetails = ({route}) => {
                   width: 200,
                   height: 200,
                   margin: 10,
-                
                   borderRadius: 2,
                 }}
               />
@@ -101,9 +103,15 @@ const ProductDetails = ({route}) => {
 
       <Hr lineColor="black" width={1} text="Select Color" />
 
-      {stock > 0 && <AddToCart product={prodetails?.product} />}
-      {/* {stock > 0 && <ProductAddToCart product={prodetails?.product} />} */}
+      <AddToCart product={prodetails?.product} />
 
+      <View>
+        <TouchableOpacity
+          style={styles.btnStyle}
+          onPress={() => addwishlist(prodetails)}>
+          <Text style={styles.wishList}>WishList</Text>
+        </TouchableOpacity>
+      </View>
       <View>
         <TouchableOpacity
           style={styles.btnStyle}
@@ -140,6 +148,18 @@ const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 5,
     textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  wishList: {
+    backgroundColor: '#ffd700',
+    padding: 10,
+    margin: 10,
+    color: 'white',
+    borderRadius: 5,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 20,
   },
   customStylesHere: {
     fontWeight: 'bold',
@@ -155,3 +175,15 @@ const styles = StyleSheet.create({
   },
 });
 export default ProductDetails;
+
+//   const addwishlist = p => {
+//.log(p, 'addtowishlist');
+// console.log();
+// dispatch(addtoWishList(p?.product));
+// Navigation.navigate('favoritescrn', {id: id});
+// ToastAndroid.showWithGravity(
+//  'ITEM ADDED TO THE WISHLIST',
+//  ToastAndroid.SHORT,
+//  ToastAndroid.CENTER,
+// );
+//};
