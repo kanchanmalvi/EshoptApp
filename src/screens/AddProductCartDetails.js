@@ -191,7 +191,7 @@ const AddProductCartDetails = () => {
               <TouchableOpacity
                 style={styles.btntextContinue}
                 onPress={() => Navigation.navigate('product')}>
-                <Text style={{color: 'white'}}> Continue Shopping</Text>
+                <Text style={{color: 'white',fontSize:15,margin:10}}> Continue Shopping</Text>
               </TouchableOpacity>
             </View>
 

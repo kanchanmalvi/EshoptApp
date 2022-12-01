@@ -125,7 +125,7 @@ const FavoriteScrn = () => {
           })}
 
           <SafeAreaProvider>
-            <BottomSheet modalProps={{}} isVisible={isVisible}>
+            <BottomSheet  isVisible={isVisible}>
               <ListItem>
                 <ListItem.Content>
                   <ListItem.Title

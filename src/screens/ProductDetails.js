@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 import FormatePrice from '../helpers/FormatePrice';
 import StarRating from '../components/StarRating';
 import Hr from 'react-native-hr-component';
-import AddToCart from './AddToCart';
+import ColorSelection from '../components/ColorSelection';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {detailApi} from '../features/ProductDetails/detailsSlice';
@@ -80,10 +80,13 @@ const ProductDetails = ({route}) => {
 
       <StarRating starsrating={stars} reviews={reviews} />
 
-      <Text
-        style={{margin: 10, textAlign: 'left', color: '#696969', fontSize: 15}}>
-        {description}
-      </Text>
+      <View style={{justifyContent: 'space-evenly'}}>
+        <Text
+          style={{alignSelf: 'auto', margin: 10, fontSize: 15, lineHeight: 23}}>
+          {description}
+        </Text>
+      </View>
+
       <View style={styles.pricestockStyle}>
         <Text
           style={{
@@ -96,27 +99,29 @@ const ProductDetails = ({route}) => {
       </View>
 
       <View>
-        <Text style={styles.stockcolor}>
+        <Text
+          style={[styles.stockcolor, stock > 0 ? styles.green : styles.red]}>
           {stock > 0 ? 'In Stock' : 'Not Available'}
         </Text>
       </View>
 
       <Hr lineColor="black" width={1} text="Select Color" />
 
-      <AddToCart product={prodetails?.product} />
+      <ColorSelection product={prodetails?.product} />
+
+      <View>
+        <TouchableOpacity
+          style={styles.btnStyle}
+          onPress={() => addcart(prodetails)}>
+          <Text style={styles.addToCart}>Add To Cart</Text>
+        </TouchableOpacity>
+      </View>
 
       <View>
         <TouchableOpacity
           style={styles.btnStyle}
           onPress={() => addwishlist(prodetails)}>
           <Text style={styles.wishList}>WishList</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        <TouchableOpacity
-          style={styles.btnStyle}
-          onPress={() => addcart(prodetails)}>
-          <Text style={styles.addToCart}>Add To Cart</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -168,8 +173,13 @@ const styles = StyleSheet.create({
   pricestockStyle: {
     margin: 10,
   },
-  stockcolor: {
+  green: {
     color: 'green',
+  },
+  red: {
+    color: 'red',
+  },
+  stockcolor: {
     fontSize: 18,
     marginLeft: 20,
   },

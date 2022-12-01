@@ -26,6 +26,7 @@ export const cartSlice = createSlice({
         state.cartItem.push(aa);
       }
     },
+    
     decreaseCart: (state, action) => {
       let itemIndex = state.cartItem.findIndex(
         data => data.id === action.payload.id,
