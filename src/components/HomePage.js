@@ -21,7 +21,7 @@ const HomePage = () => {
           resizeMode="cover"
           style={styles.image}>
           <Text style={styles.shoptext}>Welcome To</Text>
-          <Text style={styles.shopMaintext}> Eshop Store</Text>
+          <Text style={styles.shopMaintext}>Eshop Store</Text>
           {user && (
             <Text
               style={styles.text}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     textAlign: 'left',
     position: 'relative',
-    bottom: 250,
+    bottom: 260,
     margin: 10,
   },
   shopMaintext: {
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     textAlign: 'right',
     position: 'relative',
-    bottom: 260,
+    bottom: 280,
     margin: 10,
   },
 });

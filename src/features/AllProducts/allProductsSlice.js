@@ -23,9 +23,7 @@ export const allProductsSlice = createSlice({
 
   reducers: {
     sorting: (state, action) => {
-    //  console.log(state, action, 'newsorting');
       const featured_value = action.payload?.value;
-    //  console.log(featured_value, 'featured_value');
 
       const aa = state.sortingProduct?.sort((a, b) => {
         if (featured_value === 'Lowest') {
@@ -38,7 +36,6 @@ export const allProductsSlice = createSlice({
           return b.name.localeCompare(a.name);
         }
       });
-      console.log(aa, 'aa');
     },
   },
 
@@ -50,7 +47,7 @@ export const allProductsSlice = createSlice({
     builder.addCase(testapi.fulfilled, (state, action) => {
       console.log('fulfilledxyz', state, action);
       state.sortingProduct = [...action.payload];
-      state.products = action.payload
+      state.products = action.payload;
     });
 
     builder.addCase(testapi.rejected, (state, action) => {

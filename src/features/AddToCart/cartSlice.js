@@ -9,12 +9,12 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      console.log(action?.payload, 'serachbyname');
-      // console.log(action, 'existItemAction');
+  
+
       const existItem = state.cartItem.findIndex(
         data => data?.id === action?.payload?.id,
       );
-      console.log(existItem, 'existItem');
+ 
 
       if (existItem >= 0) {
         state.cartItem[existItem] = {
@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
         state.cartItem.push(aa);
       }
     },
-    
+
     decreaseCart: (state, action) => {
       let itemIndex = state.cartItem.findIndex(
         data => data.id === action.payload.id,
@@ -38,8 +38,6 @@ export const cartSlice = createSlice({
       } else {
         null;
       }
-
-      // console.log(itemIndex, 'itemIndex');
     },
 
     remove: (state, action) => {

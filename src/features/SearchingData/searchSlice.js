@@ -10,7 +10,7 @@ export const searchSlice = createSlice({
 
   reducers: {
     productList: (state, action) => {
-      // console.log(state, action, 'productList');
+     
       state.products = action.payload;
       return {
         products: action.payload,
@@ -21,7 +21,7 @@ export const searchSlice = createSlice({
       console.log( state.products,typeof state.products, '13');
       const filteredUsers =
         state.products.map(e => {
-        //  console.log( e, '123');
+      
         });
 
       return {

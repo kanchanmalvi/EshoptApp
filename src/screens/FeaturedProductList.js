@@ -17,7 +17,7 @@ const FeaturedProductList = () => {
   const Navigation = useNavigation();
 
   const product = useSelector(state => state.products);
-  console.log(product, 'productsgjyrgeyjfg20');
+
 
   useEffect(() => {
     dispatch(testapi());

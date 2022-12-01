@@ -31,7 +31,6 @@ const Footer = () => {
   const cart = useSelector(state => state.cart);
 
   const wishlist = useSelector(state => state.wishList);
-  console.log(wishlist, 'wishlist');
 
   return (
     <View>
@@ -45,7 +44,10 @@ const Footer = () => {
             style={styles.iconStyle}
             onPress={getfavorite}
           />
-          <View style={{}}>
+          <View
+            style={[
+              wishlist?.wishlistItem?.length === 0 ? styles.none : styles.flex,
+            ]}>
             <Text style={styles.favoriteiconStyle}>
               {wishlist?.wishlistItem?.length}
             </Text>
@@ -53,12 +55,13 @@ const Footer = () => {
         </View>
 
         <View style={{position: 'relative'}}>
-          <Icon 
+          <Icon
             name="cart-plus"
             style={styles.iconStyle}
             onPress={shoppingcart}
           />
-          <View style={{}}>
+          <View
+            style={[cart?.cartItem?.length === 0 ? styles.none : styles.flex]}>
             <Text style={styles.cartlength}>{cart?.cartItem?.length}</Text>
           </View>
         </View>
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     color: 'white',
     fontWeight: 'bold',
-    backgroundColor: '#005c97',
+    backgroundColor: '#D39D38',
     borderRadius: 3,
     width: 22,
     height: 22,
@@ -122,6 +125,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+  },
+  none: {
+    display: 'none',
+  },
+  flex: {
+    display: 'flex',
   },
 });
 export default Footer;

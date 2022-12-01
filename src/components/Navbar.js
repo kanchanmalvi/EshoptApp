@@ -67,7 +67,13 @@ const Navbar = () => {
           See All Product
         </Text>
         <Button
-          icon={<Icon name="caretright" color="#ffffff" />}
+          icon={
+            <Icon
+              name="caretright"
+              color="#ffffff"
+              style={{position: 'relative', right: 10, top: 1}}
+            />
+          }
           buttonStyle={{
             borderRadius: 0,
             marginLeft: 0,
@@ -85,18 +91,26 @@ const Navbar = () => {
           <Text style={{marginBottom: 10, textAlign: 'center', fontSize: 20}}>
             Feature Products
           </Text>
-          <Button
-            icon={<Icon name="caretright" color="#ffffff" />}
-            buttonStyle={{
-              borderRadius: 0,
-              marginLeft: 0,
-              marginRight: 0,
-              marginBottom: 0,
-              backgroundColor: '#ffa07a',
-            }}
-            title="VIEW NOW"
-            onPress={() => Navigation.navigate('featuredproducts')}
-          />
+          <View>
+            <Button
+              icon={
+                <Icon
+                  name="caretright"
+                  color="white"
+                  style={{position: 'relative', right: 10, top: 1}}
+                />
+              }
+              buttonStyle={{
+                borderRadius: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                marginBottom: 0,
+                backgroundColor: '#ffa07a',
+              }}
+              title="VIEW NOW"
+              onPress={() => Navigation.navigate('featuredproducts')}
+            />
+          </View>
         </Card>
       </View>
     </ScrollView>
@@ -122,9 +136,10 @@ const styles = StyleSheet.create({
   },
 
   innerText: {
-    color: 'black',
-    fontSize: 30,
-    marginTop: 5,
+    color: '#fd746c',
+    fontSize: 25,
+    marginTop: 10,
+    fontWeight:"bold"
   },
   innerTextgiven: {
     color: 'black',

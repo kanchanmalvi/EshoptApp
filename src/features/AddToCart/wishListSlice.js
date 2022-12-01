@@ -8,12 +8,9 @@ export const wishListSlice = createSlice({
 
   reducers: {
     addtoWishList: (state, action) => {
-      console.log(action?.payload, 'wishlist');
-
       const existItem = state?.wishlistItem.findIndex(
         data => data?.id === action?.payload?.id,
       );
-      console.log(existItem, 'existItem');
 
       if (existItem >= 0) {
         state.wishlistItem[existItem] = {

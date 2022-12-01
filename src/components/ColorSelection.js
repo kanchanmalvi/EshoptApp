@@ -10,7 +10,6 @@ const ColorSelection = ({product}) => {
       <Text
         style={{
           fontSize: 20,
-
           marginTop: 10,
         }}>
         Color :

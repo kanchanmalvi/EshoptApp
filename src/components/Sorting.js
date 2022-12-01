@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 
 const Sorting = () => {
   const product = useSelector(state => state.products);
-   console.log(product, 'sorting product');
 
   return (
     <View>

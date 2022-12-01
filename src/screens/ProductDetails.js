@@ -34,7 +34,6 @@ const ProductDetails = ({route}) => {
     prodetails?.product;
 
   const addcart = p => {
-    console.log(p, 'dhfgytdffffffffff');
     dispatch(addToCart(p?.product));
     Navigation.navigate('shoppingcart', {id: id});
     ToastAndroid.showWithGravity(
@@ -45,7 +44,6 @@ const ProductDetails = ({route}) => {
   };
 
   const addwishlist = p => {
-    console.log(p, 'ADDED PRODUCT TO WISHLIST');
     dispatch(addtoWishList(p?.product));
     Navigation.navigate('favoritescrn', {id: id});
     ToastAndroid.showWithGravity(
@@ -186,7 +184,7 @@ const styles = StyleSheet.create({
 });
 export default ProductDetails;
 
-//   const addwishlist = p => {
+// const addwishlist = p => {
 //.log(p, 'addtowishlist');
 // console.log();
 // dispatch(addtoWishList(p?.product));

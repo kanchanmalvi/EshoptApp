@@ -19,8 +19,6 @@ const Product = () => {
   const Navigation = useNavigation();
   const product = useSelector(state => state.products);
 
-  console.log(product, 'filterdataproduct');
-
   const dispatch = useDispatch();
 
   useEffect(() => {

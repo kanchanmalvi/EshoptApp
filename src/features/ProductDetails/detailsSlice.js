@@ -9,7 +9,7 @@ export const detailApi = createAsyncThunk(
         `https://api.pujakaitem.com/api/products/${id}`,
       );
       const product = await response.data;
-      //console.log(product, 'single product test');
+
       return product;
     } catch (error) {
       console.log(error, 'error');
@@ -24,7 +24,7 @@ export const detailProductsSlice = createSlice({
   },
   reducers: {
     singleproductdetails: (state, action) => {
-    //  console.log(action.payload, "actionssss")
+   
       state.product = action.payload;
     },
   },
