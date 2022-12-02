@@ -1,35 +1,17 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Linking,
-  StyleProp,
-  TextStyle,
-  ViewStyle,
-  TouchableOpacity,
-  Image,
-  Button,
-} from 'react-native';
-import {
-  Header,
-  Header as HeaderRNE,
-  HeaderProps,
-  Icon,
-  Input,
-} from '@rneui/themed';
+import {StyleSheet, View, Text, Image,ScrollView} from 'react-native';
 
 const LogoEcom = () => {
   return (
     <View style={styles.headerContainer}>
       <View>
         <Image
-          source={require('../../Assets/logo3.png')}
-          style={{margin: 20, width: 100, height: 100}}
+          source={require('../../Assets/loginImage.png')}
+          style={{margin: 20, width: 230, height: 230}}
         />
       </View>
       <View>
-        <Text style={styles.heading}> E-Comm Site App</Text>
+        <Text style={styles.heading}>Eshop Store</Text>
       </View>
     </View>
   );
@@ -40,13 +22,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '##ff7f50',
-    marginBottom: 20,
     width: '100%',
     paddingVertical: 15,
   },
   heading: {
-    color: '#ff7f50',
-    fontSize: 22,
+    color: '#ffd194',
+    fontSize: 40,
     fontWeight: 'bold',
   },
 });

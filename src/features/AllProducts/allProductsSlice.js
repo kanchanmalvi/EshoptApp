@@ -46,8 +46,9 @@ export const allProductsSlice = createSlice({
 
     builder.addCase(testapi.fulfilled, (state, action) => {
       console.log('fulfilledxyz', state, action);
-      state.sortingProduct = [...action.payload];
       state.products = action.payload;
+      state.sortingProduct = [...action.payload];
+    
     });
 
     builder.addCase(testapi.rejected, (state, action) => {

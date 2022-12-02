@@ -24,6 +24,24 @@ export const cartSlice = createSlice({
       }
     },
 
+    // addToCart: (state, action) => {
+    //   const {id, color, price, stock,image,name} = action?.payload;
+
+    //   let a = {
+    //     id,
+    //     id: id + color,
+    //     price: price,
+    //     stock: stock,
+    //     image: image?.[0]?.url,
+    //     name:name
+    //   };
+
+    //   return {
+    //     ...state,
+    //     cartItem: [...state.cartItem, a],
+    //   };
+    // },
+
     decreaseCart: (state, action) => {
       let itemIndex = state.cartItem.findIndex(
         data => data.id === action.payload.id,

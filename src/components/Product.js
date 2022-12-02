@@ -35,7 +35,7 @@ const Product = () => {
   return (
     <ScrollView>
       <View>
-        {product.sortingProduct?.length === 0 ? (
+        {product?.sortingProduct?.length === 0 ? (
           <View style={styles.loader}>
             <Text>
               <ActivityIndicator />
@@ -57,7 +57,7 @@ const Product = () => {
               <TabBar />
             </View>
             <View>
-              {product.sortingProduct
+              {product?.sortingProduct
                 ?.filter(e =>
                   e.name.toLowerCase().includes(search.toLowerCase()),
                 )

@@ -44,9 +44,9 @@ const AddProductCartDetails = () => {
   }, [cart, dispatch]);
 
   const placedOrder = () => {
-    dispatch(clearCart());
     setVisible(!visible);
-    Alert.alert('Order Placed Successfully');
+    Navigation.navigate('ordersuccess');
+    dispatch(clearCart());
   };
   const toggleOverlay = () => {
     setVisible(!visible);
@@ -195,7 +195,6 @@ const AddProductCartDetails = () => {
                 style={styles.btntextContinue}
                 onPress={() => Navigation.navigate('product')}>
                 <Text style={{color: 'white', fontSize: 15, margin: 10}}>
-           
                   Continue Shopping
                 </Text>
               </TouchableOpacity>
@@ -260,16 +259,20 @@ const AddProductCartDetails = () => {
           <Text style={{fontSize: 20, color: 'gray', padding: 10}}>
             Do You Want To Place This Order
           </Text>
-          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
             <Text
               onPress={toggleOverlay}
               style={{
                 fontSize: 20,
                 color: 'white',
                 margin: 10,
-                backgroundColor: 'red',
-                padding: 5,
-                width: 100,
+                backgroundColor: '#ff6347',
+                padding: 10,
                 textAlign: 'center',
                 borderRadius: 5,
               }}>
@@ -279,15 +282,14 @@ const AddProductCartDetails = () => {
               onPress={placedOrder}
               style={{
                 fontSize: 20,
-                color: 'white',
+                color: 'black',
                 margin: 10,
-                backgroundColor: 'black',
-                padding: 5,
-                width: 100,
+                backgroundColor: '#ED8F03',
+                padding: 10,
                 textAlign: 'center',
                 borderRadius: 5,
               }}>
-              Ok
+              Proceed To Checkout
             </Text>
           </View>
         </Overlay>

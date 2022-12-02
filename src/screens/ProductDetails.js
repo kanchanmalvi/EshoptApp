@@ -45,7 +45,7 @@ const ProductDetails = ({route}) => {
 
   console.log(color, 'color');
   const addcart = p => {
-    dispatch(addToCart(p?.product));
+    dispatch(addToCart(p?.product, color, id, price));
     Navigation.navigate('shoppingcart', {id: id});
     ToastAndroid.showWithGravity(
       'ITEM ADDED TO THE CART',

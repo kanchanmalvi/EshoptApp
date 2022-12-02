@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
-
 import DropdownComponent from '../components/DropdownComponent';
-// import Sorting from './Sorting';
+import Sorting from '../components/Sorting';
 
 const TabBar = () => {
   return (
@@ -10,18 +9,8 @@ const TabBar = () => {
       <View style={styles.Dropdown}>
         <DropdownComponent />
       </View>
-
       <View>
-        <Text
-          style={{
-            textAlign: 'left',
-            fontSize: 20,
-            color: 'black',
-            fontWeight: 'bold',
-            margin: 10,
-          }}>
-          All Products
-        </Text>
+        <Sorting />
       </View>
     </View>
   );

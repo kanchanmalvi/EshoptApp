@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     color: '#fd746c',
     fontSize: 25,
     marginTop: 10,
-    fontWeight:"bold"
+    fontWeight: 'bold',
   },
   innerTextgiven: {
     color: 'black',

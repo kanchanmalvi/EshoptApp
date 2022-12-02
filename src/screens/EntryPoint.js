@@ -12,7 +12,7 @@ const EntryPoint = () => {
   const onPress = async () => {
     try {
       await authorize();
-      Navigation.navigate('homepage');
+      Navigation.navigate('login');
     } catch (e) {
       console.log(e);
     }
