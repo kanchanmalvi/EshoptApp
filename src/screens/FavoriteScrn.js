@@ -98,8 +98,23 @@ const FavoriteScrn = () => {
                     source={{
                       uri: i?.image?.[0]?.url ? i?.image[0].url.trim() : '',
                     }}
-                    style={{width: 60, height: 60, borderRadius: 30}}
+                    style={{width: 80, height: 80, borderRadius: 40}}
                   />
+                  <Text
+                    style={{
+                      backgroundColor: i?.colors?.[0],
+                      color: 'transparent',
+                      width: 25,
+                      height: 25,
+                      borderRadius: 5,
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      borderColor: 'white',
+                      borderWidth: 2,
+                    }}>
+                    {i?.colors?.[0]}
+                  </Text>
                 </View>
                 <View>
                   <Text style={{textAlign: 'center'}}>{i.name}</Text>
@@ -125,7 +140,7 @@ const FavoriteScrn = () => {
           })}
 
           <SafeAreaProvider>
-            <BottomSheet  isVisible={isVisible}>
+            <BottomSheet isVisible={isVisible}>
               <ListItem>
                 <ListItem.Content>
                   <ListItem.Title

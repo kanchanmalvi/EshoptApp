@@ -12,13 +12,12 @@ import React, {useEffect, useState} from 'react';
 import FormatePrice from '../helpers/FormatePrice';
 import StarRating from '../components/StarRating';
 import Hr from 'react-native-hr-component';
-import ColorSelection from '../components/ColorSelection';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {detailApi} from '../features/ProductDetails/detailsSlice';
 import {addToCart} from '../features/AddToCart/cartSlice';
-
 import {addtoWishList} from '../features/AddToCart/wishListSlice';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const ProductDetails = ({route}) => {
   const dispatch = useDispatch();
@@ -30,9 +29,21 @@ const ProductDetails = ({route}) => {
     dispatch(detailApi(id));
   }, []);
 
-  const {image, name, company, stars, reviews, description, stock, price} =
-    prodetails?.product;
+  const {
+    colors,
+    image,
+    name,
+    company,
+    stars,
+    reviews,
+    description,
+    stock,
+    price,
+  } = prodetails?.product;
 
+  const [color, setColor] = useState(colors?.[0]);
+
+  console.log(color, 'color');
   const addcart = p => {
     dispatch(addToCart(p?.product));
     Navigation.navigate('shoppingcart', {id: id});
@@ -105,8 +116,26 @@ const ProductDetails = ({route}) => {
 
       <Hr lineColor="black" width={1} text="Select Color" />
 
-      <ColorSelection product={prodetails?.product} />
-
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <Text
+          style={{
+            fontSize: 20,
+            marginTop: 10,
+          }}>
+          Color :
+        </Text>
+        {colors?.map((clr, id) => {
+          return (
+            <View key={id}>
+              <Text
+                style={[styles.colorStyle, {backgroundColor: clr}]}
+                onPress={() => setColor(clr)}>
+                {color === clr ? <Icon name="check" color="white" /> : null}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
       <View>
         <TouchableOpacity
           style={styles.btnStyle}
@@ -180,6 +209,18 @@ const styles = StyleSheet.create({
   stockcolor: {
     fontSize: 18,
     marginLeft: 20,
+  },
+  colorStyle: {
+    margin: 10,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
+    color: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    padding: 10,
   },
 });
 export default ProductDetails;

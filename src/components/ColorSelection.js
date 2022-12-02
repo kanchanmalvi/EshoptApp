@@ -17,7 +17,7 @@ const ColorSelection = ({product}) => {
       {colors?.map((clr, id) => {
         return (
           <View key={id}>
-            <Text 
+            <Text
               style={[styles.colorStyle, {backgroundColor: clr}]}
               onPress={() => setColor(clr)}>
               {color === clr ? <Icon name="check" color="white" /> : null}

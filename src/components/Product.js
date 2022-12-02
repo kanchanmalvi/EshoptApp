@@ -104,9 +104,10 @@ const Product = () => {
 
                           <Text
                             style={{
-                              color: '#5f9ea0',
+                              color: '#A43931',
                               margin: 10,
                               textAlign: 'center',
+                              fontSize:20
                             }}>
                             {<FormatePrice price={data.price} />}
                           </Text>
