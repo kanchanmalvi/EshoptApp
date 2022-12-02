@@ -153,7 +153,11 @@ const AddProductCartDetails = () => {
                           </TouchableOpacity>
                         </View>
                         <Text
-                          style={{fontSize: 18, marginLeft: 5, marginRight: 5}}>
+                          style={{
+                            fontSize: 18,
+                            marginLeft: 5,
+                            marginRight: 5,
+                          }}>
                           {i?.cartQuantity}
                         </Text>
 
@@ -253,19 +257,36 @@ const AddProductCartDetails = () => {
           style={{height: '100%', padding: 10}}
           isVisible={visible}
           onBackdropPress={toggleOverlay}>
-          <Text style={{fontSize: 20, color: 'gray'}}>
-            {' '}
+          <Text style={{fontSize: 20, color: 'gray', padding: 10}}>
             Do You Want To Place This Order
           </Text>
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
             <Text
               onPress={toggleOverlay}
-              style={{fontSize: 20, color: 'red', margin: 10}}>
+              style={{
+                fontSize: 20,
+                color: 'white',
+                margin: 10,
+                backgroundColor: 'red',
+                padding: 5,
+                width: 100,
+                textAlign: 'center',
+                borderRadius: 5,
+              }}>
               Cancel
             </Text>
             <Text
               onPress={placedOrder}
-              style={{fontSize: 20, color: 'black', margin: 10}}>
+              style={{
+                fontSize: 20,
+                color: 'white',
+                margin: 10,
+                backgroundColor: 'black',
+                padding: 5,
+                width: 100,
+                textAlign: 'center',
+                borderRadius: 5,
+              }}>
               Ok
             </Text>
           </View>
@@ -348,6 +369,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     marginTop: 200,
+  },
+  itemName: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+  },
+  itemText: {
+    textAlign: 'center',
+    fontSize: 18,
   },
 });
 export default AddProductCartDetails;
