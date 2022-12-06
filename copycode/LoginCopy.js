@@ -4,56 +4,72 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Alert,
   ScrollView,
   TextInput,
-  Button,
 } from 'react-native';
+//import {Header as HeaderRNE, Input} from '@rneui/themed';
 import LogoEcom from '../../components/LogoEcom';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import CheckBox from '@react-native-community/checkbox';
-import auth from '@react-native-firebase/auth';
-import {
-  GoogleSignin,
-  statusCodes,
-  GoogleSigninButton,
-} from '@react-native-google-signin/google-signin';
 
 const Login = () => {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId: '',
-    });
-  }, []);
-
-  async function onGoogleButtonPress() {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    console.log(GoogleSignin, 'GoogleSignin');
-
-    const {idToken} = await GoogleSignin.signIn();
-    console.log(idToken, 'idToken');
-
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    console.log(googleCredential, 'googleCredential');
-
-    return auth().signInWithCredential(googleCredential);
-  }
+  // for async storage
+  const [getEmailValue, setGetEmailValue] = useState('');
+  const [getPassValue, setGetPassValue] = useState('');
 
   const Navigation = useNavigation();
-  auth().signInWithEmailAndPassword('johndoe@gmail.com', 'helloworld123');
-  const createUser = (email, password) => {
-    try {
-      auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      alert(error);
+
+  const loginBtn = () => {
+    let passwordValidation =
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    // let emailValidation = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    let emailValidation = /\S+@+\S+\.\S/;
+    if (!email === 'kanchan@gmail.com') {
+      setEmailError('Please fill details');
+    } else if (!emailValidation.test(email)) {
+      setEmailError('Invalid Credential');
+    } else if (!password === 'Kanchan@123') {
+      setPasswordError('Please fill details');
+    } else if (!passwordValidation.test(password)) {
+      setPasswordError('Invalid Credential');
+    } else if (email && password) {
+      AsyncStorage.setItem('Email', email);
+      AsyncStorage.setItem('Password', password);
+      Navigation.navigate('homepage', {
+        email: getEmailValue,
+        password: getPassValue,
+      });
+      setEmail('');
+      setPassword('');
+      Alert.alert('Login Successfully');
+      Navigation.navigate('homepage');
+    } else {
     }
   };
 
+  const getData = () => {
+    AsyncStorage.getItem('Email').then(value => setGetEmailValue(value));
+    AsyncStorage.getItem('Password').then(value => setGetPassValue(value));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    if (getEmailValue && getPassValue) {
+      Navigation.navigate('homepage', {
+        email: getEmailValue,
+        password: getPassValue,
+      });
+    }
+  }, [getEmailValue, getPassValue]);
+  console.log(getEmailValue, getPassValue, 'getData');
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <LogoEcom />
@@ -75,9 +91,6 @@ const Login = () => {
         <Text style={{marginHorizontal: 10, color: 'red'}}>{emailError}</Text>
         <View style={{}}>
           <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
             placeholder="Enter User Password"
             errorStyle={{color: 'red'}}
             value={password}
@@ -90,45 +103,14 @@ const Login = () => {
           <Text style={{marginHorizontal: 10, margin: 2, color: 'red'}}>
             {passwordError}
           </Text>
-
           <TouchableOpacity style={{}}>
             <Text style={styles.forgotBtn}>Forgot Password</Text>
           </TouchableOpacity>
-
-          <View style={styles.termscondition}>
-            <View style={{flexDirection: 'row'}}>
-              <CheckBox
-                disabled={false}
-                value={toggleCheckBox}
-                onValueChange={() => setToggleCheckBox(!toggleCheckBox)}
-                tintColors={{true: '#70e1f5'}}
-                style={{}}
-              />
-              <Text style={{marginTop: 5}}>Please Check To Go For Login</Text>
-            </View>
-          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => createUser(email, password)}
-          disabled={!toggleCheckBox}>
-          <Text
-            style={[
-              styles.loginBtn,
-              {backgroundColor: toggleCheckBox ? '#70e1f5' : 'gray'},
-            ]}>
-            Login
-          </Text>
+
+        <TouchableOpacity onPress={loginBtn}>
+          <Text style={styles.loginBtn}>Login</Text>
         </TouchableOpacity>
-        <View style={{width: '100%'}}>
-          <Text>
-            <GoogleSigninButton
-              style={{margin: 20, height: 50, width: 300}}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-            />
-          </Text>
-        </View>
-
         <TouchableOpacity>
           <Text style={styles.userexist}>
             Don't Have An Acoount ,
@@ -146,12 +128,12 @@ const Login = () => {
 
 const styles = StyleSheet.create({
   loginBtn: {
+    backgroundColor: '#70e1f5',
     color: '#fff',
     padding: 10,
     margin: 10,
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold',
   },
   forgotBtn: {
     color: 'red',
@@ -176,11 +158,6 @@ const styles = StyleSheet.create({
     borderColor: '#70e1f5',
     borderWidth: 1,
     marginHorizontal: 10,
-  },
-  termscondition: {
-    margin: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
 });
 
