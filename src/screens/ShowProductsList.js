@@ -13,11 +13,12 @@ import FormatePrice from '../helpers/FormatePrice';
 const ShowProductsList = () => {
   const route = useRoute();
   return (
-    <View style={{backgroundColor:"white"}}>
+    <View style={{backgroundColor: 'white'}}>
       <Text style={styles.heading}>ShowProductsList</Text>
       <FlatList
         data={route?.params?.newState}
         renderItem={(item, id) => {
+          
           return (
             <View style={styles.productImageContent} key={id}>
               <View
@@ -78,7 +79,6 @@ const ShowProductsList = () => {
 };
 const styles = StyleSheet.create({
   productImageContent: {
-
     borderWidth: 0.5,
     borderColor: '#556b2f',
   },
@@ -90,12 +90,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   heading: {
-  textAlign:"center",
-  height:50,
-  fontSize:18,
-  padding:10
-
-
+    textAlign: 'center',
+    height: 50,
+    fontSize: 18,
+    padding: 10,
   },
 });
 export default ShowProductsList;

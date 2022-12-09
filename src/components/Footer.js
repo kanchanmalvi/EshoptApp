@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Overlay} from 'react-native-elements';
@@ -10,18 +17,18 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const Footer = () => {
   const [visible, setVisible] = useState(false);
 
-  const navigation = useNavigation();
+  const Navigation = useNavigation();
 
   const getfavorite = () => {
-    navigation.navigate('favoritescrn');
+    Navigation.navigate('favoritescrn');
   };
 
   const homePage = () => {
-    navigation.navigate('postform');
+    Navigation.navigate('homepage');
   };
 
   const shoppingcart = () => {
-    navigation.navigate('shoppingcart');
+    Navigation.navigate('shoppingcart');
   };
 
   const toggleOverlay = () => {
@@ -29,12 +36,18 @@ const Footer = () => {
   };
 
   const cart = useSelector(state => state.cart);
-
   const wishlist = useSelector(state => state.wishList);
 
   return (
     <View>
       <View style={styles.footerIcon}>
+        <TouchableOpacity onPress={() => Navigation.navigate('postform')}>
+          <Image
+            source={require('../../Assets/admin.png')}
+            style={{width: 30, height: 30, padding: 10}}
+          />
+        </TouchableOpacity>
+
         <Text style={styles.texticonstyle}>
           <Icon name="home" style={styles.iconStyle} onPress={homePage} />
         </Text>

@@ -1,10 +1,17 @@
-import {StyleSheet, Text, View, TextInput, Button} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
 
-const PostForm = () => {
+export default function PostForm() {
   const [name, setName] = useState('');
   const [brand, setBrand] = useState('');
   const [price, setPrice] = useState('');
@@ -32,7 +39,7 @@ const PostForm = () => {
 
   useEffect(() => {
     xyz();
-  });
+  }, [newState]);
 
   const xyz = () => {
     try {
@@ -86,45 +93,48 @@ const PostForm = () => {
             setImage(null),
             setPrice(''),
           );
-
-        Navigation.navigate('showproductlist', {
-          newState,
-        });
+        Navigation.navigate('showproductlist', {newState});
       } catch (error) {
         console.log(error, 'checking error');
       }
     }
   };
-
   return (
     <View
       style={{
         backgroundColor: 'white',
-        height: '100%',
       }}>
       <View
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'orange',
+          margin: 10,
         }}>
-        <Text
-          style={{
-            fontSize: 20,
-            color: 'white',
-
-            margin: 20,
-          }}>
-          Add Product
+        <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>
+          Welcome To Admin Section
         </Text>
       </View>
 
+      <View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'black',
+            padding: 10,
+            margin: 10,
+            fontWeight: 'bold',
+          }}>
+          <Text
+            style={{textAlign: 'center', color: 'white'}}
+            onPress={() => Navigation.navigate('showproductlist', {newState})}>
+            View List Of The Products
+          </Text>
+        </TouchableOpacity>
+      </View>
       <View
         style={{
-          backgroundColor: 'white',
           margin: 10,
         }}>
+        <View>
+          <Text style={{color:"black", fontSize:18}}>Add New Product</Text>
+        </View>
         <TextInput
           placeholder="Enter Name"
           value={name}
@@ -169,7 +179,8 @@ const PostForm = () => {
       </View>
     </View>
   );
-};
+}
+
 const styles = StyleSheet.create({
   imageDisplay: {
     height: 50,
@@ -189,4 +200,3 @@ const styles = StyleSheet.create({
     height: 50,
   },
 });
-export default PostForm;
