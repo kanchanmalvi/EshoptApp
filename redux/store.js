@@ -9,6 +9,7 @@ import storage from 'redux-persist/lib/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import searchReducer from '../src/features/SearchingData/searchSlice';
 import wishListReducer from '../src/features/AddToCart/wishListSlice';
+import addProductReducer from '../src/features/AllProducts/AddProduct';
 
 const persistConfig = {
   key: 'root',
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   counter: counterReducer,
   productDetails: detailProductsReducer,
-  wishList:wishListReducer
+  wishList: wishListReducer,
+  addProduct: addProductReducer,
 });
 
 let persistedReducer = persistReducer(persistConfig, rootReducer);

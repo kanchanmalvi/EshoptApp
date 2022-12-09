@@ -18,7 +18,7 @@ import {SearchBar} from '@rneui/themed';
 const Product = () => {
   const Navigation = useNavigation();
   const product = useSelector(state => state.products);
-
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,8 +29,6 @@ const Product = () => {
   const productDetails = id => {
     Navigation.navigate('productdetails', {id: id});
   };
-
-  const [search, setSearch] = useState('');
 
   return (
     <ScrollView>
@@ -107,7 +105,7 @@ const Product = () => {
                               color: '#A43931',
                               margin: 10,
                               textAlign: 'center',
-                              fontSize:20
+                              fontSize: 20,
                             }}>
                             {<FormatePrice price={data.price} />}
                           </Text>

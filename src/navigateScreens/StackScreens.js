@@ -13,6 +13,8 @@ import EntryPoint from '../screens/EntryPoint';
 import OrderSuccess from '../screens/OrderSuccess';
 import Login from '../screens/login_signup/Login';
 import Signup from '../screens/login_signup/Signup';
+import PostForm from '../components/PostForm';
+import ShowProductsList from '../screens/ShowProductsList';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,16 +74,16 @@ const Sidebar = () => {
         component={AddProductCartDetails}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="about"
-        component={About}
+      <Stack.Screen
+        name="showproductlist"
+        component={ShowProductsList}
         options={{headerShown: false}}
-      /> */}
-      {/* <Stack.Screen
-        name="contact"
-        component={Contact}
+      />
+      <Stack.Screen
+        name="postform"
+        component={PostForm}
         options={{headerShown: false}}
-      /> */}
+      />
       <Stack.Screen
         name="favoritescrn"
         component={FavoriteScrn}

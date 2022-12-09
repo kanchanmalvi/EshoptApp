@@ -13,9 +13,8 @@ import {useNavigation} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
 import {
-  GoogleSignin,
-  statusCodes,
   GoogleSigninButton,
+  GoogleSignin,
 } from '@react-native-google-signin/google-signin';
 
 const Login = () => {
@@ -25,34 +24,47 @@ const Login = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const Navigation = useNavigation();
+
+  const submit = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        setEmail(''), setPassword('');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+        console.error(error);
+      });
+  };
+
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId: '',
+      webClientId:
+        '317417769843-m862h2gt4hf31alpuagnhm0ed9h9g8sf.apps.googleusercontent.com',
     });
-  }, []);
+  });
 
   async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
     console.log(GoogleSignin, 'GoogleSignin');
-
+    // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
     console.log(idToken, 'idToken');
-
+    // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     console.log(googleCredential, 'googleCredential');
-
+    // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);
   }
-
-  const Navigation = useNavigation();
-  auth().signInWithEmailAndPassword('johndoe@gmail.com', 'helloworld123');
-  const createUser = (email, password) => {
-    try {
-      auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      alert(error);
-    }
-  };
 
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
@@ -108,9 +120,7 @@ const Login = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity
-          onPress={() => createUser(email, password)}
-          disabled={!toggleCheckBox}>
+        <TouchableOpacity onPress={submit} disabled={!toggleCheckBox}>
           <Text
             style={[
               styles.loginBtn,
@@ -119,12 +129,23 @@ const Login = () => {
             Login
           </Text>
         </TouchableOpacity>
-        <View style={{width: '100%'}}>
+        <View
+          style={{
+            display: 'flex',
+            textAlign: 'center',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
           <Text>
             <GoogleSigninButton
-              style={{margin: 20, height: 50, width: 300}}
+              style={{height: 50}}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Dark}
+              onPress={() =>
+                onGoogleButtonPress().then(() =>
+                  console.log('Signed in with Google!'),
+                )
+              }
             />
           </Text>
         </View>

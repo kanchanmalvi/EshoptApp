@@ -14,6 +14,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 
+
 const Navbar = () => {
   const Navigation = useNavigation();
 
@@ -24,6 +25,8 @@ const Navbar = () => {
   const win = Dimensions.get('window');
 
   const ratio = win.width / 541;
+
+
   return (
     <ScrollView>
       <View style={styles.baseStyle}>
@@ -112,6 +115,9 @@ const Navbar = () => {
             />
           </View>
         </Card>
+        {/* <Text onPress={() => pickImage()}>choose Image</Text> */}
+
+       
       </View>
     </ScrollView>
   );

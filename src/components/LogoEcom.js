@@ -7,7 +7,7 @@ const LogoEcom = () => {
       <View>
         <Image
           source={require('../../Assets/loginImage.png')}
-          style={{margin: 20, width: 230, height: 230}}
+          style={{margin: 20, width: 200, height: 200}}
         />
       </View>
       <View>

@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   const homePage = () => {
-    navigation.navigate('homepage');
+    navigation.navigate('postform');
   };
 
   const shoppingcart = () => {
