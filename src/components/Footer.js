@@ -41,7 +41,7 @@ const Footer = () => {
   return (
     <View>
       <View style={styles.footerIcon}>
-        <TouchableOpacity onPress={() => Navigation.navigate('postform')}>
+        <TouchableOpacity onPress={() => Navigation.navigate('adminscreen')}>
           <Image
             source={require('../../Assets/admin.png')}
             style={{width: 30, height: 30, padding: 10}}

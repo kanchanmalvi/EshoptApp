@@ -103,37 +103,30 @@ export default function PostForm() {
     <View
       style={{
         backgroundColor: 'white',
+        height:"100%"
       }}>
-      <View
+      <TouchableOpacity
         style={{
+          backgroundColor: '#ffd194',
+          padding: 10,
           margin: 10,
+          borderRadius: 5,
         }}>
-        <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>
-          Welcome To Admin Section
+        <Text
+          style={{textAlign: 'center', color: 'white', fontSize: 25}}
+          onPress={() => Navigation.navigate('showproductlist', {newState})}>
+          View List Of The Products
         </Text>
-      </View>
+      </TouchableOpacity>
 
-      <View>
-        <TouchableOpacity
-          style={{
-            backgroundColor: 'black',
-            padding: 10,
-            margin: 10,
-            fontWeight: 'bold',
-          }}>
-          <Text
-            style={{textAlign: 'center', color: 'white'}}
-            onPress={() => Navigation.navigate('showproductlist', {newState})}>
-            View List Of The Products
-          </Text>
-        </TouchableOpacity>
-      </View>
       <View
         style={{
           margin: 10,
         }}>
         <View>
-          <Text style={{color:"black", fontSize:18}}>Add New Product</Text>
+          <Text style={{color: 'black', textAlign: 'center', fontSize: 20}}>
+            Add New Product
+          </Text>
         </View>
         <TextInput
           placeholder="Enter Name"

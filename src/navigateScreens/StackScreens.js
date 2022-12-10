@@ -12,6 +12,7 @@ import Login from '../screens/login_signup/Login';
 import Signup from '../screens/login_signup/Signup';
 import PostForm from '../components/PostForm';
 import ShowProductsList from '../screens/ShowProductsList';
+import AdminScreen from '../screens/AdminScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +85,11 @@ const Sidebar = () => {
       <Stack.Screen
         name="favoritescrn"
         component={FavoriteScrn}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="adminscreen"
+        component={AdminScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

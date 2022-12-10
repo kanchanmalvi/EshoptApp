@@ -5,6 +5,7 @@ import {
   FlatList,
   Image,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import {useRoute} from '@react-navigation/native';
@@ -15,10 +16,10 @@ const ShowProductsList = () => {
   return (
     <View style={{backgroundColor: 'white'}}>
       <Text style={styles.heading}>ShowProductsList</Text>
+
       <FlatList
         data={route?.params?.newState}
         renderItem={(item, id) => {
-          
           return (
             <View style={styles.productImageContent} key={id}>
               <View
@@ -70,6 +71,33 @@ const ShowProductsList = () => {
                   </Text>
                 </View>
               </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <TouchableOpacity style={styles.updatebtnStyle}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 18,
+                      color: 'white',
+                    }}>
+                    Update Product
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.dltbtnStyle}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontSize: 18,
+                      color: 'white',
+                    }}>
+                    Delete Product
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }}
@@ -82,11 +110,17 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#556b2f',
   },
-  btnStyle: {
+  updatebtnStyle: {
     backgroundColor: '#E0D72E',
     margin: 10,
     padding: 10,
-    width: '80%',
+    borderRadius: 5,
+  },
+  dltbtnStyle: {
+    backgroundColor: 'red',
+    margin: 10,
+    padding: 10,
+
     borderRadius: 5,
   },
   heading: {

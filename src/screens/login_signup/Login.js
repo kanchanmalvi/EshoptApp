@@ -32,6 +32,7 @@ const Login = () => {
       .then(() => {
         console.log('User account created & signed in!');
         setEmail(''), setPassword('');
+        Navigation.navigate('postform');
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -102,11 +103,6 @@ const Login = () => {
           <Text style={{marginHorizontal: 10, margin: 2, color: 'red'}}>
             {passwordError}
           </Text>
-
-          <TouchableOpacity style={{}}>
-            <Text style={styles.forgotBtn}>Forgot Password</Text>
-          </TouchableOpacity>
-
           <View style={styles.termscondition}>
             <View style={{flexDirection: 'row'}}>
               <CheckBox
@@ -149,7 +145,9 @@ const Login = () => {
             />
           </Text>
         </View>
-
+        <TouchableOpacity style={{}}>
+          <Text style={styles.forgotBtn}>Forgot Password</Text>
+        </TouchableOpacity>
         <TouchableOpacity>
           <Text style={styles.userexist}>
             Don't Have An Acoount ,
@@ -177,8 +175,9 @@ const styles = StyleSheet.create({
   forgotBtn: {
     color: 'red',
     paddingHorizontal: 10,
-    textAlign: 'right',
+    textAlign: 'center',
     fontSize: 15,
+    margin: 10,
   },
   userexist: {
     textAlign: 'center',

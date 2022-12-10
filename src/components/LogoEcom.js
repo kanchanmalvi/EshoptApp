@@ -4,12 +4,10 @@ import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
 const LogoEcom = () => {
   return (
     <View style={styles.headerContainer}>
-      <View>
-        <Image
-          source={require('../../Assets/loginImage.png')}
-          style={{margin: 20, width: 200, height: 200}}
-        />
-      </View>
+      <Image
+        source={require('../../Assets/loginImage.png')}
+        style={{width: 200, height: 200}}
+      />
       <View>
         <Text style={styles.heading}>Eshop Store</Text>
       </View>
