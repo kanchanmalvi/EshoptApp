@@ -6,7 +6,7 @@ const LogoEcom = () => {
     <View style={styles.headerContainer}>
       <Image
         source={require('../../Assets/loginImage.png')}
-        style={{width: 200, height: 200}}
+        style={{width: 150, height: 150}}
       />
       <View>
         <Text style={styles.heading}>Eshop Store</Text>

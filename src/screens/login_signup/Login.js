@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
-  Button,
+  ToastAndroid,
 } from 'react-native';
 import LogoEcom from '../../components/LogoEcom';
 import {useNavigation} from '@react-navigation/native';
@@ -16,36 +16,72 @@ import {
   GoogleSigninButton,
   GoogleSignin,
 } from '@react-native-google-signin/google-signin';
+import Container, {Toast} from 'toastify-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  // for async storage
+  const [getEmailValue, setGetEmailValue] = useState('');
+  const [getPassValue, setGetPassValue] = useState('');
 
   const Navigation = useNavigation();
 
+  //form submit
   const submit = () => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        setEmail(''), setPassword('');
-        Navigation.navigate('postform');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-        console.error(error);
-      });
+    if (!email) {
+      alert('Please fill the data');
+    } else if (!password) {
+      null;
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          setTimeout(() => {
+            setEmail(''), setPassword('');
+            AsyncStorage.setItem('email', email);
+            AsyncStorage.setItem('password', password);
+            Navigation.navigate('postform', {
+              email: getEmailValue,
+              password: getPassValue,
+            });
+            ToastAndroid.showWithGravity(
+              'User Login Successfully.',
+              ToastAndroid.SHORT,
+              ToastAndroid.CENTER,
+            );
+          }, 1000);
+          console.log('User account created & signed in!');
+        })
+        .catch(error => {
+          ToastAndroid.showWithGravity(
+            error.message,
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER,
+          );
+        });
+    }
+  };
+  const getData = () => {
+    AsyncStorage.getItem('email').then(value => setGetEmailValue(value));
+    AsyncStorage.getItem('password').then(value => setGetPassValue(value));
   };
 
+  useEffect(() => {
+    getData();
+  }, []);
+  useEffect(() => {
+    if (getEmailValue && getPassValue) {
+      Navigation.navigate('postform', {
+        email: getEmailValue,
+        password: getPassValue,
+      });
+    }
+  }, [getEmailValue, getPassValue]);
+  console.log(getEmailValue, getPassValue, 'getData');
+  //Google Authentication
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -54,16 +90,13 @@ const Login = () => {
   });
 
   async function onGoogleButtonPress() {
-    // Check if your device supports Google Play
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
     console.log(GoogleSignin, 'GoogleSignin');
-    // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
     console.log(idToken, 'idToken');
-    // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     console.log(googleCredential, 'googleCredential');
-    // Sign-in the user with the credential
+
     return auth().signInWithCredential(googleCredential);
   }
 
@@ -71,7 +104,7 @@ const Login = () => {
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <LogoEcom />
       <View style={styles.loginContainer}>
-        <View style={{}}>
+        <View style={{marginVertical: 5}}>
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -80,13 +113,11 @@ const Login = () => {
             value={email}
             onChangeText={e => {
               setEmail(e);
-              setEmailError('');
             }}
             style={styles.input}
           />
         </View>
-        <Text style={{marginHorizontal: 10, color: 'red'}}>{emailError}</Text>
-        <View style={{}}>
+        <View style={{marginVertical: 5}}>
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -96,13 +127,9 @@ const Login = () => {
             value={password}
             onChangeText={e => {
               setPassword(e);
-              setPasswordError('');
             }}
             style={styles.input}
           />
-          <Text style={{marginHorizontal: 10, margin: 2, color: 'red'}}>
-            {passwordError}
-          </Text>
           <View style={styles.termscondition}>
             <View style={{flexDirection: 'row'}}>
               <CheckBox
@@ -116,6 +143,7 @@ const Login = () => {
             </View>
           </View>
         </View>
+
         <TouchableOpacity onPress={submit} disabled={!toggleCheckBox}>
           <Text
             style={[
@@ -125,6 +153,7 @@ const Login = () => {
             Login
           </Text>
         </TouchableOpacity>
+        <Container position="top" />
         <View
           style={{
             display: 'flex',
@@ -145,7 +174,7 @@ const Login = () => {
             />
           </Text>
         </View>
-        <TouchableOpacity style={{}}>
+        <TouchableOpacity>
           <Text style={styles.forgotBtn}>Forgot Password</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -186,6 +215,9 @@ const styles = StyleSheet.create({
   },
   signBtn: {
     color: '#00c6ff',
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#00c6ff',
   },
   loginContainer: {
     padding: 10,
@@ -201,6 +233,18 @@ const styles = StyleSheet.create({
     margin: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  color: {
+    color: 'red',
+  },
+  disabled: {
+    display: 'none',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

@@ -6,102 +6,104 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ToastAndroid,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import SignupImage from '../../components/SignupImage';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 const Signup = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  // for async storage
-  const [getEmailValue, setGetEmailValue] = useState('');
-  const [getPassValue, setGetPassValue] = useState('');
 
   const Navigation = useNavigation();
 
-  const signupBtn = () => {};
+  const signupBtn = () => {
+    if (!name) {
+      alert('Please fill the data');
+    } else if (!email) {
+      null;
+    } else if (!password) {
+      null;
+    } else {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(credential => {
+          database()
+            .ref('user')
+            .set({
+              name: name,
+              email: email,
+              password: password,
+            })
+            .then(() => console.log('Data set.'));
 
-  const getData = () => {
-    AsyncStorage.getItem('Email').then(value => setGetEmailValue(value));
-    AsyncStorage.getItem('Password').then(value => setGetPassValue(value));
+          console.log(
+            credential,
+            'User account created & signed in!',
+            name,
+            password,
+            email,
+          );
+          setTimeout(() => {
+            setName(''), setEmail(''), setPassword('');
+            Navigation.navigate('login');
+            ToastAndroid.showWithGravity(
+              'Create User Successfully.',
+              ToastAndroid.SHORT,
+              ToastAndroid.CENTER,
+            );
+          }, 1000);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (getEmailValue && getPassValue) {
-      Navigation.navigate('homepage', {
-        email: getEmailValue,
-        password: getPassValue,
-      });
-    }
-  }, [getEmailValue, getPassValue]);
-  console.log(getEmailValue, getPassValue, 'getData');
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <SignupImage />
       <View style={styles.loginContainer}>
-        <View style={{}}>
+        <View style={{marginVertical: 10}}>
           <TextInput
-            placeholder="Enter User Name"
+            placeholder="Enter the Name"
             errorStyle={{color: 'red'}}
-            value={email}
+            value={name}
             onChangeText={e => {
-              setEmail(e);
-              setEmailError('');
+              setName(e);
             }}
             style={styles.input}
           />
         </View>
-        <Text style={{marginHorizontal: 10, color: 'red'}}>{emailError}</Text>
-        <View style={{}}>
+
+        <View style={{marginVertical: 10}}>
           <TextInput
-            placeholder="Enter User Email"
+            placeholder="Enter the Email"
             errorStyle={{color: 'red'}}
             value={email}
             onChangeText={e => {
               setEmail(e);
-              setEmailError('');
             }}
             style={styles.input}
           />
         </View>
-        <Text style={{marginHorizontal: 10, color: 'red'}}>{emailError}</Text>
-        <View style={{}}>
+        <View style={{marginVertical: 10}}>
           <TextInput
-            placeholder="Enter User Password"
-            errorStyle={{color: 'red'}}
-            value={email}
-            onChangeText={e => {
-              setEmail(e);
-              setEmailError('');
-            }}
-            style={styles.input}
-          />
-        </View>
-        <Text style={{marginHorizontal: 10, color: 'red'}}>{emailError}</Text>
-        <View style={{}}>
-          <TextInput
-            placeholder="Enter User Confirm Password"
+            placeholder="Enter the Password"
             errorStyle={{color: 'red'}}
             value={password}
             onChangeText={e => {
               setPassword(e);
-              setPasswordError('');
             }}
             style={styles.input}
+            secureTextEntry={true}
           />
-          <Text style={{marginHorizontal: 10, margin: 2, color: 'red'}}>
-            {passwordError}
-          </Text>
         </View>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={signupBtn}>
           <Text style={styles.loginBtn}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -142,6 +144,9 @@ const styles = StyleSheet.create({
   signBtn: {
     color: '#00c6ff',
     paddingLeft: 10,
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'solid',
+    textDecorationColor: '#00c6ff',
   },
   loginContainer: {
     padding: 10,

@@ -5,11 +5,14 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import DocumentPicker from 'react-native-document-picker';
 import database from '@react-native-firebase/database';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function PostForm() {
   const [name, setName] = useState('');
@@ -19,9 +22,48 @@ export default function PostForm() {
   const [image, setImage] = useState(null);
   const [newState, setNewState] = useState([]);
   const [showData, setShowData] = useState({});
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  // for async storage
+  const [getEmailValue, setGetEmailValue] = useState('');
+  const [getPassValue, setGetPassValue] = useState('');
 
   const Navigation = useNavigation();
+  // user Logout
+  const logout = () => {
+    auth()
+      .signOut()
+      .then(
+        () =>
+          Navigation.navigate('login', {
+            email: getEmailValue,
+            password: getPassValue,
+          }),
+        AsyncStorage.removeItem('email').then(value => setGetEmailValue(value)),
+        AsyncStorage.removeItem('password').then(value =>
+          setGetPassValue(value),
+        ),
 
+        ToastAndroid.showWithGravity(
+          'User Logout Successfully.',
+          ToastAndroid.SHORT,
+          ToastAndroid.CENTER,
+        ),
+      )
+      .catch(error => {
+        console.log(error, 'error 34');
+      });
+  };
+  // user Details
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; //
+  }, []);
+  function onAuthStateChanged(user) {
+    setUser(user);
+    console.log(user, 'users');
+    if (initializing) setInitializing(false);
+  }
   //document upload
   const pickImage = async () => {
     try {
@@ -67,15 +109,35 @@ export default function PostForm() {
   //For Create The Product Form  Firebase POST Method
   const submit = () => {
     if (!name) {
-      alert('Please fill the data');
+      ToastAndroid.showWithGravity(
+        'Please fill the data',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
     } else if (!brand) {
-      alert('Please fill the data');
+      ToastAndroid.showWithGravity(
+        'Please fill the data',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
     } else if (!price) {
-      alert('Please fill the data');
+      ToastAndroid.showWithGravity(
+        'Please fill the data',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
     } else if (!desc) {
-      alert('Please fill the data');
+      ToastAndroid.showWithGravity(
+        'Please fill the data',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
     } else if (!image) {
-      alert('Please fill the data');
+      ToastAndroid.showWithGravity(
+        'Please fill the data',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
     } else {
       try {
         database()
@@ -99,12 +161,36 @@ export default function PostForm() {
       }
     }
   };
+
   return (
     <View
       style={{
         backgroundColor: 'white',
-        height:"100%"
+        height: '100%',
       }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          margin: 10,
+        }}>
+        {user && (
+          <Text style={{fontSize: 15, marginVertical: 10}}>
+            Hello, {user?.email}
+          </Text>
+        )}
+        <Text
+          style={{
+            fontSize: 15,
+            backgroundColor: 'red',
+            color: 'white',
+            padding: 10,
+            borderRadius: 5,
+          }}
+          onPress={logout}>
+          Logout
+        </Text>
+      </View>
       <TouchableOpacity
         style={{
           backgroundColor: '#ffd194',
@@ -163,12 +249,9 @@ export default function PostForm() {
           </Text>
         </Text>
 
-        <Button
-          title="Submit"
-          onPress={submit}
-          color="#70e1f5"
-          style={styles.button}
-        />
+        <TouchableOpacity onPress={submit}>
+          <Text style={styles.button}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -190,6 +273,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button: {
-    height: 50,
+    padding: 10,
+    backgroundColor: '#70e1f5',
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 18,
   },
 });
