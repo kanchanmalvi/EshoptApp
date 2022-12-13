@@ -6,13 +6,15 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {Tab, Text, TabView, BottomSheet, Button, ListItem} from '@rneui/themed';
-import {Card} from 'react-native-elements';
+import {Tab, Text, BottomSheet, ListItem} from '@rneui/themed';
 import {useSelector, useDispatch} from 'react-redux';
 import FormatePrice from '../helpers/FormatePrice';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {clearWishList} from '../features/AddToCart/wishListSlice';
+import {
+  clearWishList,
+  removeWishlist,
+} from '../features/AddToCart/wishListSlice';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useNavigation} from '@react-navigation/native';
 
@@ -32,6 +34,10 @@ const FavoriteScrn = () => {
   const clearWishlist = () => {
     dispatch(clearWishList());
     setIsVisible(false);
+  };
+  const removeproduct = item => {
+    console.log('first', item);
+    dispatch(removeWishlist(item));
   };
 
   return (
@@ -126,11 +132,24 @@ const FavoriteScrn = () => {
                 <View>
                   <Text style={{}}>{i.company}</Text>
                 </View>
-                <View>
+
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={{marginRight: 15}}>
+                    <AntDesign
+                      name="delete"
+                      style={{fontSize: 25}}
+                      color="red"
+                      onPress={() => removeproduct(i?.id)}
+                    />
+                  </Text>
                   <Text style={{}}>
                     <Entypo
                       name="dots-three-vertical"
-                      size={20}
+                      size={25}
                       onPress={() => setIsVisible(true)}
                     />
                   </Text>
@@ -139,13 +158,14 @@ const FavoriteScrn = () => {
             );
           })}
 
+          {/* bottom section */}
           <SafeAreaProvider>
             <BottomSheet isVisible={isVisible}>
               <ListItem>
                 <ListItem.Content>
                   <ListItem.Title
                     style={{paddingTop: 20, fontSize: 17, color: 'black'}}
-                    onPress={clearWishlist}>
+                    onPress={() => clearWishlist()}>
                     <AntDesign
                       name="delete"
                       style={{fontSize: 18, marginTop: 10}}
@@ -154,18 +174,17 @@ const FavoriteScrn = () => {
                     Clear Wishlist
                   </ListItem.Title>
                   <ListItem.Title
-                    style={{paddingTop: 20, color: 'black'}}
+                    style={{paddingTop: 20, color: 'black', fontSize: 18}}
                     onPress={() => Navigation.navigate('product')}>
                     <AntDesign
                       name="arrowleft"
-                      style={{fontSize: 18, marginTop: 15}}
+                      style={{fontSize: 18}}
                       color="black"
-                    />
+                    />{' '}
                     Continue Shopping
                   </ListItem.Title>
                 </ListItem.Content>
               </ListItem>
-
               <ListItem.Title
                 style={{
                   backgroundColor: 'red',
@@ -194,7 +213,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 10,
     backgroundColor: 'white',
-    marginTop: 10,
   },
   button: {
     margin: 10,
