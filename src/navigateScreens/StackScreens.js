@@ -1,18 +1,21 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Product from '../components/Product';
-import HomePage from '../components/HomePage';
-import FeaturedProductList from '../screens/FeaturedProductList';
-import ProductDetails from '../screens/ProductDetails';
-import AddProductCartDetails from '../screens/AddProductCartDetails';
-import FavoriteScrn from '../screens/FavoriteScrn';
-import EntryPoint from '../screens/EntryPoint';
-import OrderSuccess from '../screens/OrderSuccess';
-import Login from '../screens/login_signup/Login';
-import Signup from '../screens/login_signup/Signup';
-import PostForm from '../components/PostForm';
-import ShowProductsList from '../screens/ShowProductsList';
-import AdminScreen from '../screens/AdminScreen';
+import Product from '../screens/Product';
+import {
+  HomePage,
+  FeaturedProductList,
+  ProductDetails,
+  AddProductCartDetails,
+  FavoriteScrn,
+  EntryPoint,
+  OrderSuccess,
+  Login,
+  Signup,
+  PostForm,
+  ShowProductsList,
+  AdminScreen,
+  WelcomeScreen,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +29,12 @@ const Sidebar = () => {
         headerTintColor: 'white',
         headerBackTitle: 'Back',
       }}
-      initialRouteName="entrypoint">
+      initialRouteName="welcomescreen">
+      <Stack.Screen
+        name="welcomescreen"
+        component={WelcomeScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="entrypoint"
         component={EntryPoint}

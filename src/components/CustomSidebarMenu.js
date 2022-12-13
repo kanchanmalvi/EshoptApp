@@ -12,7 +12,7 @@ const CustomSidebarMenu = props => {
   const onPress = async () => {
     try {
       await clearSession();
-      Navigation.navigate('entrypoint');
+      Navigation.navigate('welcomescreen');
       Alert.alert(`😔 ${user.name} is Logout.`);
     } catch (e) {
       console.log(e);

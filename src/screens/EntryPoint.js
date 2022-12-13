@@ -3,7 +3,7 @@ import React from 'react';
 import {useAuth0} from 'react-native-auth0';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import HomePage from '../components/HomePage';
+import HomePage from './HomePage';
 
 const EntryPoint = () => {
   const Navigation = useNavigation();

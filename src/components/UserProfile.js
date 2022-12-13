@@ -7,7 +7,6 @@ import {
   Alert,
 } from 'react-native';
 import {Button} from 'react-native-elements';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,7 +21,7 @@ const UserProfile = ({closeOverlay}) => {
   const onPress = async () => {
     try {
       await clearSession();
-      Navigation.navigate('entrypoint');
+      Navigation.navigate('welcomescreen');
       Alert.alert(`😔 ${user.name} is Logout. `);
       closeOverlay(false);
     } catch (e) {

@@ -31,7 +31,7 @@ const AdminScreen = () => {
         <Text style={styles.heading}>Welcome To Admin Section</Text>
         <TouchableOpacity onPress={() => Navigation.navigate('login')}>
           <Text style={styles.subheading}>
-            {!user ? 'Login' : ' Explore Here..'}
+            {!user ? 'Login' : ' Explore Here'}
             <AntDesign name="arrowright" size={20} />
           </Text>
         </TouchableOpacity>
