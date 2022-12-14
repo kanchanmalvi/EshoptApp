@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
+  Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {testapi} from '../features/AllProducts/allProductsSlice';
@@ -14,11 +15,15 @@ import FormatePrice from '../helpers/FormatePrice';
 import TabBar from '../components/TabBar';
 import {useNavigation} from '@react-navigation/native';
 import {SearchBar} from '@rneui/themed';
+import CategoryFilter from '../components/CategoryFilter';
 
 const Product = () => {
   const Navigation = useNavigation();
   const product = useSelector(state => state.products);
   const [search, setSearch] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [allProduct, setAllProduct] = useState(product?.sortingProduct);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +34,24 @@ const Product = () => {
   const productDetails = id => {
     Navigation.navigate('productdetails', {id: id});
   };
+
+  //CategoryWiseFilter
+
+  const getCategoryData = (data, category) => {
+    let newval = data.map(i => {
+      return i[category];
+    });
+    return (newval = ['All', ...new Set(newval)]);
+  };
+  //CompanyWiseFilter
+  const getCompanyData = (data, companies) => {
+    let newval = data.map(i => {
+      return i[companies];
+    });
+    return (newval = ['All', ...new Set(newval)]);
+  };
+  const categoryData = getCategoryData(product?.sortingProduct, 'category');
+  const company = getCompanyData(product?.sortingProduct, 'company');
 
   return (
     <ScrollView>
@@ -55,7 +78,21 @@ const Product = () => {
               <TabBar />
             </View>
             <View>
-              {product?.sortingProduct
+              <Text
+                style={{
+                  textAlign: 'left',
+                  fontSize: 18,
+                  margin: 10,
+                  marginBottom: 10,
+                  color: 'black',
+                }}
+                onPress={() => setModalVisible(true)}>
+                Category wise filter
+              </Text>
+            </View>
+
+            <View>
+              {allProduct
                 ?.filter(e =>
                   e.name.toLowerCase().includes(search.toLowerCase()),
                 )
@@ -130,6 +167,28 @@ const Product = () => {
           </View>
         )}
       </View>
+      {/* category wise filter modal  */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <CategoryFilter
+              company={company}
+              setModalVisible={setModalVisible}
+              modalVisible={modalVisible}
+              allProduct={allProduct}
+              setAllProduct={setAllProduct}
+              product={product}
+              categoryData={categoryData}
+            />
+          </View>
+        </View>
+      </Modal>
     </ScrollView>
   );
 };
@@ -144,7 +203,6 @@ const styles = StyleSheet.create({
     borderColor: '#556b2f',
   },
   btnStyle: {
-    // backgroundColor: '#48d1cc',
     backgroundColor: '#E0D72E',
     margin: 10,
     padding: 10,
@@ -173,7 +231,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   // for Modal style
-
   modalView: {
     backgroundColor: 'white',
     height: '100%',
@@ -187,3 +244,5 @@ const styles = StyleSheet.create({
   },
 });
 export default Product;
+
+// backgroundColor: '#48d1cc',

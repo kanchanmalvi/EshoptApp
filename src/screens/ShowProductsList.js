@@ -37,7 +37,7 @@ const ShowProductsList = () => {
                     borderBottomWidth: 3,
                   }}>
                   <Image
-                    source={{uri: item?.item?.value?.image?.uri}}
+                    source={{uri: item?.item?.value?.img}}
                     style={{width: 250, height: 200, margin: 10}}
                   />
                 </View>

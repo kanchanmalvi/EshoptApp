@@ -79,6 +79,5 @@ const CustomSidebarMenu = props => {
   );
 };
 
-export default CustomSidebarMenu;
-
 const styles = StyleSheet.create({});
+export default CustomSidebarMenu; 

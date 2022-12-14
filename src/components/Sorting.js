@@ -27,7 +27,7 @@ const Sorting = () => {
 
 const styles = StyleSheet.create({
   textstyle: {
-    margin: 10,
+  
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,

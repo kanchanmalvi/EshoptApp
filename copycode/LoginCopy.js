@@ -69,7 +69,7 @@ const Login = () => {
       });
     }
   }, [getEmailValue, getPassValue]);
-  console.log(getEmailValue, getPassValue, 'getData');
+ 
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <LogoEcom />
