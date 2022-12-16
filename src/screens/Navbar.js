@@ -13,10 +13,17 @@ import {Button, Card} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
-
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {testapi} from '../features/AllProducts/allProductsSlice';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const Navigation = useNavigation();
+  // useEffect(() => {
+  //   let url = 'products';
+  //   dispatch(testapi(url));
+  // }, [dispatch]);
 
   const onPress = async () => {
     Navigation.toggleDrawer();
@@ -25,7 +32,6 @@ const Navbar = () => {
   const win = Dimensions.get('window');
 
   const ratio = win.width / 541;
-
 
   return (
     <ScrollView>
@@ -116,8 +122,6 @@ const Navbar = () => {
           </View>
         </Card>
         {/* <Text onPress={() => pickImage()}>choose Image</Text> */}
-
-       
       </View>
     </ScrollView>
   );

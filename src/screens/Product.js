@@ -4,11 +4,13 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ScrollView,
   ActivityIndicator,
   Modal,
+  SafeAreaView,
+  RefreshControl,
+  ScrollView,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {testapi} from '../features/AllProducts/allProductsSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import FormatePrice from '../helpers/FormatePrice';
@@ -29,7 +31,15 @@ const Product = () => {
   useEffect(() => {
     let url = 'products';
     dispatch(testapi(url));
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    setAllProduct(product?.sortingProduct);
+  }, [product]);
+  // useLayoutEffect(() => {
+  //     let url = 'products';
+  //   dispatch(testapi(url));
+  // }, [])
 
   const productDetails = id => {
     Navigation.navigate('productdetails', {id: id});
@@ -54,7 +64,7 @@ const Product = () => {
   const company = getCompanyData(product?.sortingProduct, 'company');
 
   return (
-    <ScrollView>
+    <View>
       <View>
         {product?.sortingProduct?.length === 0 ? (
           <View style={styles.loader}>
@@ -90,80 +100,81 @@ const Product = () => {
                 Category wise filter
               </Text>
             </View>
-
-            <View>
-              {allProduct
-                ?.filter(e =>
-                  e.name.toLowerCase().includes(search.toLowerCase()),
-                )
-                .map((data, id) => {
-                  return (
-                    <View style={styles.productImageContent} key={id}>
-                      <View
-                        style={{
-                          width: '100%',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: 'white',
-                          marginBottom: 10,
-                        }}>
+            <ScrollView>
+              <View>
+                {allProduct
+                  ?.filter(e =>
+                    e.name.toLowerCase().includes(search.toLowerCase()),
+                  )
+                  .map((data, id) => {
+                    return (
+                      <View style={styles.productImageContent} key={id}>
                         <View
                           style={{
-                            borderBottomColor: 'black',
-                            borderBottomWidth: 3,
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+                            marginBottom: 10,
                           }}>
-                          <Image
-                            source={{uri: data.image}}
-                            style={{width: 250, height: 200, margin: 10}}
-                          />
+                          <View
+                            style={{
+                              borderBottomColor: 'black',
+                              borderBottomWidth: 3,
+                            }}>
+                            <Image
+                              source={{uri: data.image}}
+                              style={{width: 250, height: 200, margin: 10}}
+                            />
+                          </View>
+
+                          <View style={{width: '50%'}}>
+                            <Text
+                              style={{
+                                textAlign: 'center',
+                                fontSize: 20,
+                                color: 'black',
+                                marginTop: 5,
+                              }}>
+                              {data.name}
+                            </Text>
+                            <Text style={{textAlign: 'center'}}>
+                              {data.company}
+                            </Text>
+
+                            <Text style={{textAlign: 'center'}}>
+                              {data.description.slice(0, 48)}...
+                            </Text>
+
+                            <Text
+                              style={{
+                                color: '#A43931',
+                                margin: 10,
+                                textAlign: 'center',
+                                fontSize: 20,
+                              }}>
+                              {<FormatePrice price={data.price} />}
+                            </Text>
+                          </View>
+
+                          <TouchableOpacity style={styles.btnStyle}>
+                            <Text
+                              onPress={() => productDetails(data.id)}
+                              style={{
+                                textAlign: 'center',
+                                fontSize: 18,
+                                color: 'white',
+                              }}>
+                              View Details
+                            </Text>
+                          </TouchableOpacity>
                         </View>
-
-                        <View style={{width: '50%'}}>
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              fontSize: 20,
-                              color: 'black',
-                              marginTop: 5,
-                            }}>
-                            {data.name}
-                          </Text>
-                          <Text style={{textAlign: 'center'}}>
-                            {data.company}
-                          </Text>
-
-                          <Text style={{textAlign: 'center'}}>
-                            {data.description.slice(0, 48)}...
-                          </Text>
-
-                          <Text
-                            style={{
-                              color: '#A43931',
-                              margin: 10,
-                              textAlign: 'center',
-                              fontSize: 20,
-                            }}>
-                            {<FormatePrice price={data.price} />}
-                          </Text>
-                        </View>
-
-                        <TouchableOpacity style={styles.btnStyle}>
-                          <Text
-                            onPress={() => productDetails(data.id)}
-                            style={{
-                              textAlign: 'center',
-                              fontSize: 18,
-                              color: 'white',
-                            }}>
-                            View Details
-                          </Text>
-                        </TouchableOpacity>
                       </View>
-                    </View>
-                  );
-                })}
-            </View>
+                    );
+                  })}
+              </View>
+            </ScrollView>
           </View>
         )}
       </View>
@@ -189,7 +200,7 @@ const Product = () => {
           </View>
         </View>
       </Modal>
-    </ScrollView>
+    </View>
   );
 };
 

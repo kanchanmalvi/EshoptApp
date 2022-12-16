@@ -1,92 +1,72 @@
-import React from 'react';
-import {StyleSheet, View, Text, Image, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const WelcomeScreen = () => {
+const EntryPoint = () => {
   const Navigation = useNavigation();
-  return (
-    <View>
-      <View
-        style={{
-          display: 'flex',
-          textAlign: 'center',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Image
-          source={require('../../Assets/eshoplogo.png')}
-          style={{width: 300, height: 300}}
-        />
-      </View>
 
-      <View style={styles.headerContainer}>
-        <Text style={styles.heading}>Store</Text>
-      </View>
-      <View style={{}}>
-        <Text
-          style={{
-            color: 'black',
-            textAlign: 'center',
-            fontSize: 20,
-            marginVertical: 15,
-          }}>
-          Login As..!
-        </Text>
-      </View>
-      <View style={styles.sectionHeading}>
-        <Text
-          style={styles.headingAdminLogin}
-          onPress={() => Navigation.navigate('adminscreen')}>
-          Admin
-        </Text>
-        <Text
-          style={styles.headingUserLogin}
-          onPress={() => Navigation.navigate('entrypoint')}>
-          User
-        </Text>
+  const onPress = () => {
+    Navigation.navigate('startscreen');
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      Navigation.navigate('startscreen');
+    }, 2000);
+  }, []);
+
+  return (
+    <View style={styles.EntryPointstyle}>
+      <View style={styles.container}>
+        <ImageBackground
+          source={require('../../Assets/imgnew.jpg')}
+          resizeMode="cover"
+          style={styles.image}>
+          <Text style={styles.text} onPress={onPress}>
+            Eshop <Ionicons name="arrow-redo-sharp" size={30} />
+          </Text>
+        </ImageBackground>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    backgroundColor: '#ff7f50',
-    textAlign: 'center',
+  EntryPointstyle: {
+    height: '100%',
   },
-  heading: {
-    color: 'white',
-    fontSize: 35,
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: 'center',
+    resizeMode: 'stretch',
+  },
+  text: {
+    color: '#fff0f5',
+    fontSize: 42,
     fontWeight: 'bold',
     textAlign: 'center',
-    padding: 10,
+    position: 'absolute',
+    bottom: 20,
+    left: 10,
   },
-  sectionHeading: {
-    display: 'flex',
-    textAlign: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headingAdminLogin: {
-    fontSize: 20,
-    backgroundColor: '#D1913C',
-    width: 150,
-    margin: 10,
-    padding: 10,
-    textAlign: 'center',
-    borderRadius: 5,
+
+  shoptext: {
     color: 'white',
-  },
-  headingUserLogin: {
-    fontSize: 20,
-    backgroundColor: '#FFD194',
-    width: 150,
-    margin: 10,
-    padding: 10,
+    fontSize: 40,
     textAlign: 'center',
-    borderRadius: 5,
-    color: 'white',
+    position: 'absolute',
+    top: 10,
+    left: 30,
   },
 });
-
-export default WelcomeScreen;
+export default EntryPoint;

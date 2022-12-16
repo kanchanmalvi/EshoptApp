@@ -14,4 +14,5 @@ export {default as Navbar} from '../screens/Navbar';
 export {default as HomePage} from '../screens/HomePage';
 export {default as PostForm} from '../screens/PostForm';
 export {default as Product} from '../screens/Product';
+export {default as StartScreen} from "../screens/StartScreen"
 

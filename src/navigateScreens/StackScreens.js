@@ -15,11 +15,15 @@ import {
   ShowProductsList,
   AdminScreen,
   WelcomeScreen,
+  Navbar,
+  StartScreen
 } from '../screens';
+
+
 
 const Stack = createNativeStackNavigator();
 
-const Sidebar = () => {
+const StackScreens = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -33,6 +37,11 @@ const Sidebar = () => {
       <Stack.Screen
         name="welcomescreen"
         component={WelcomeScreen}
+        options={{headerShown: false}}
+      />
+        <Stack.Screen
+        name="startscreen"
+        component={StartScreen}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -100,8 +109,13 @@ const Sidebar = () => {
         component={AdminScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="Explore Now"
+        component={Navbar}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
 
-export default Sidebar;
+export default StackScreens;

@@ -10,24 +10,26 @@ const CategoryFilter = ({
   categoryData,
 }) => {
   const categoryWise = value => {
-    if (categoryData) {
-      const arr = product?.sortingProduct?.filter(i => {
-        console.log(i?.category, categoryData, 'category');
-        return i?.category === value;
-      });
-      setAllProduct(arr);
+    let arr = [];
+    let temp = product?.sortingProduct;
+    if (value != 'All') {
+      arr = temp?.filter(i => i?.category === value);
+    } else {
+      arr = temp;
     }
+    setAllProduct(arr);
     setModalVisible(!modalVisible);
   };
 
   const companyWise = value => {
-    if (company) {
-      const arr = product?.sortingProduct?.filter(i => {
-        console.log(i?.category, company, 'category');
-        return i?.company === value;
-      });
-      setAllProduct(arr);
+    let arr = [];
+    let temp = product?.sortingProduct;
+    if (value != 'All') {
+      arr = temp?.filter(i => i?.company === value);
+    } else {
+      arr = temp;
     }
+    setAllProduct(arr);
     setModalVisible(!modalVisible);
   };
   return (
