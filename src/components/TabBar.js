@@ -3,11 +3,11 @@ import {View, StyleSheet, Text} from 'react-native';
 import DropdownComponent from '../components/DropdownComponent';
 import Sorting from '../components/Sorting';
 
-const TabBar = () => {
+const TabBar = ({allProduct,setAllProduct,product}) => {
   return (
     <View>
       <View style={styles.Dropdown}>
-        <DropdownComponent />
+        <DropdownComponent allProduct={allProduct} setAllProduct={setAllProduct} product={product}/>
       </View>
       <View>
         <Sorting />
@@ -16,16 +16,6 @@ const TabBar = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  Dropdown: {
-    backgroundColor: 'gray',
-    color: 'black',
-    padding: 10,
-    margin: 10,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default TabBar;

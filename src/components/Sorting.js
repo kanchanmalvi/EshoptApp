@@ -10,15 +10,14 @@ const Sorting = () => {
       <View style={styles.textstyle}>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 15,
             color: 'black',
-            fontWeight: 'bold',
             margin: 10,
           }}>
           All Products
         </Text>
-        <Text style={{color:"orange", fontSize:18}}>
-          {`${product?.sortingProduct?.length} Products Available`}
+        <Text style={{color: 'orange', fontSize: 18}}>
+          {`${product?.products?.length} Products Available`}
         </Text>
       </View>
     </View>
@@ -27,12 +26,11 @@ const Sorting = () => {
 
 const styles = StyleSheet.create({
   textstyle: {
-  
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
     backgroundColor: 'white',
-    alignItems:"center"
+    alignItems: 'center',
   },
 });
 

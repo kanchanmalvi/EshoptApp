@@ -4,28 +4,24 @@ import {
   View,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
-  Modal,
-  SafeAreaView,
   RefreshControl,
   ScrollView,
+  FlatList,
 } from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState} from 'react';
 import {testapi} from '../features/AllProducts/allProductsSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import FormatePrice from '../helpers/FormatePrice';
 import TabBar from '../components/TabBar';
 import {useNavigation} from '@react-navigation/native';
 import {SearchBar} from '@rneui/themed';
-import CategoryFilter from '../components/CategoryFilter';
 
-const Product = () => {
-  const Navigation = useNavigation();
-  const product = useSelector(state => state.products);
+const ProductFlatlist = () => {
+  const [refresh, setRefresh] = useState(false);
   const [search, setSearch] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
   const [allProduct, setAllProduct] = useState(product?.sortingProduct);
-
+  const product = useSelector(state => state.products);
+  const Navigation = useNavigation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,170 +32,116 @@ const Product = () => {
   useEffect(() => {
     setAllProduct(product?.sortingProduct);
   }, [product]);
-  // useLayoutEffect(() => {
-  //     let url = 'products';
-  //   dispatch(testapi(url));
-  // }, [])
 
   const productDetails = id => {
     Navigation.navigate('productdetails', {id: id});
   };
 
-  //CategoryWiseFilter
+  const pull = () => {
+    setRefresh(true);
 
-  const getCategoryData = (data, category) => {
-    let newval = data.map(i => {
-      return i[category];
-    });
-    return (newval = ['All', ...new Set(newval)]);
+    setTimeout(() => {
+      setRefresh(false);
+    }, 2000);
   };
-  //CompanyWiseFilter
-  const getCompanyData = (data, companies) => {
-    let newval = data.map(i => {
-      return i[companies];
-    });
-    return (newval = ['All', ...new Set(newval)]);
-  };
-  const categoryData = getCategoryData(product?.sortingProduct, 'category');
-  const company = getCompanyData(product?.sortingProduct, 'company');
 
   return (
-    <View>
-      <View>
-        {product?.sortingProduct?.length === 0 ? (
-          <View style={styles.loader}>
-            <Text>
-              <ActivityIndicator />
-            </Text>
-          </View>
-        ) : (
-          <View>
-            <View style={styles.aa}>
-              <SearchBar
-                style={{color: 'white', fontSize: 16}}
-                placeholder="Search "
-                type="text"
-                name="text"
-                value={search}
-                onChangeText={t => setSearch(t)}
-              />
-            </View>
-            <View>
-              <TabBar />
-            </View>
-            <View>
-              <Text
-                style={{
-                  textAlign: 'left',
-                  fontSize: 18,
-                  margin: 10,
-                  marginBottom: 10,
-                  color: 'black',
-                }}
-                onPress={() => setModalVisible(true)}>
-                Category wise filter
-              </Text>
-            </View>
-            <ScrollView>
-              <View>
-                {allProduct
-                  ?.filter(e =>
-                    e.name.toLowerCase().includes(search.toLowerCase()),
-                  )
-                  .map((data, id) => {
-                    return (
-                      <View style={styles.productImageContent} key={id}>
-                        <View
-                          style={{
-                            width: '100%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: 'white',
-                            marginBottom: 10,
-                          }}>
-                          <View
-                            style={{
-                              borderBottomColor: 'black',
-                              borderBottomWidth: 3,
-                            }}>
-                            <Image
-                              source={{uri: data.image}}
-                              style={{width: 250, height: 200, margin: 10}}
-                            />
-                          </View>
-
-                          <View style={{width: '50%'}}>
-                            <Text
-                              style={{
-                                textAlign: 'center',
-                                fontSize: 20,
-                                color: 'black',
-                                marginTop: 5,
-                              }}>
-                              {data.name}
-                            </Text>
-                            <Text style={{textAlign: 'center'}}>
-                              {data.company}
-                            </Text>
-
-                            <Text style={{textAlign: 'center'}}>
-                              {data.description.slice(0, 48)}...
-                            </Text>
-
-                            <Text
-                              style={{
-                                color: '#A43931',
-                                margin: 10,
-                                textAlign: 'center',
-                                fontSize: 20,
-                              }}>
-                              {<FormatePrice price={data.price} />}
-                            </Text>
-                          </View>
-
-                          <TouchableOpacity style={styles.btnStyle}>
-                            <Text
-                              onPress={() => productDetails(data.id)}
-                              style={{
-                                textAlign: 'center',
-                                fontSize: 18,
-                                color: 'white',
-                              }}>
-                              View Details
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
-                      </View>
-                    );
-                  })}
-              </View>
-            </ScrollView>
-          </View>
-        )}
+    <View style={{flex: 1}}>
+      <View style={styles.aa}>
+        <SearchBar
+          style={{color: 'white', fontSize: 16}}
+          placeholder="Search "
+          type="text"
+          name="text"
+          value={search}
+          onChangeText={t => setSearch(t)}
+        />
       </View>
-      {/* category wise filter modal  */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <CategoryFilter
-              company={company}
-              setModalVisible={setModalVisible}
-              modalVisible={modalVisible}
-              allProduct={allProduct}
-              setAllProduct={setAllProduct}
-              product={product}
-              categoryData={categoryData}
-            />
-          </View>
-        </View>
-      </Modal>
+      <View>
+        <TabBar
+          allProduct={allProduct}
+          setAllProduct={setAllProduct}
+          product={product}
+        />
+      </View>
+
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refresh} onRefresh={() => pull()} />
+        }>
+        <FlatList
+          data={allProduct?.filter(e =>
+            e.name.toLowerCase().includes(search.toLowerCase()),
+          )}
+          refreshing={true}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.productImageContent}>
+                <View
+                  style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                    marginBottom: 10,
+                  }}>
+                  <View
+                    style={{
+                      borderBottomColor: 'black',
+                      borderBottomWidth: 3,
+                    }}>
+                    <Image
+                      source={{uri: item?.image}}
+                      style={{width: 250, height: 200, margin: 10}}
+                    />
+                  </View>
+
+                  <View style={{width: '50%'}}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        fontSize: 20,
+                        color: 'black',
+                        marginTop: 5,
+                      }}>
+                      {item?.name}
+                    </Text>
+                    <Text style={{textAlign: 'center'}}>{item?.company}</Text>
+
+                    <Text style={{textAlign: 'center'}}>
+                      {item?.description.slice(0, 48)}...
+                    </Text>
+
+                    <Text
+                      style={{
+                        color: '#A43931',
+                        margin: 10,
+                        textAlign: 'center',
+                        fontSize: 20,
+                      }}>
+                      {<FormatePrice price={item?.price} />}
+                    </Text>
+                  </View>
+
+                  <TouchableOpacity style={styles.btnStyle}>
+                    <Text
+                      onPress={() => productDetails(item?.id)}
+                      style={{
+                        textAlign: 'center',
+                        fontSize: 18,
+                        color: 'white',
+                      }}>
+                      View Details
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          }}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -241,19 +183,5 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding: 5,
   },
-  // for Modal style
-  modalView: {
-    backgroundColor: 'white',
-    height: '100%',
-  },
-  loader: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    height: '100%',
-  },
 });
-export default Product;
-
-// backgroundColor: '#48d1cc',
+export default ProductFlatlist;
