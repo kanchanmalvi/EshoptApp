@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, Modal} from 'react-native';
+import {StyleSheet, View, Text, Modal, ScrollView} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch} from 'react-redux';
 import {sorting} from '../features/AllProducts/allProductsSlice';
@@ -39,15 +39,28 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
     });
     return (newval = ['All', ...new Set(newval)]);
   };
+
+  //CompanyWiseFilter
+  const getColorsData = (data, newcolor) => {
+    let newval = data.map(i => {
+      return i[newcolor];
+    });
+    if (newcolor == 'colors') {
+      return (newval = ['All', ...new Set([].concat(...newval))]);
+    } else {
+      return (newval = ['All', ...new Set(newval)]);
+    }
+  };
   const categoryData = getCategoryData(product?.sortingProduct, 'category');
   const company = getCompanyData(product?.sortingProduct, 'company');
+  const colors = getColorsData(product?.sortingProduct, 'colors');
 
   return (
     <View style={styles.container}>
       <View
         style={{
-          width: 200,
-          backgroundColor: 'white',
+          width: '45%',
+          backgroundColor: '#36D1DC',
           padding: 5,
           borderRadius: 5,
         }}>
@@ -55,7 +68,7 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
+          iconStyle={styles.iconcss}
           data={data}
           search
           maxHeight={300}
@@ -71,13 +84,13 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
       </View>
       <View
         style={{
-          width: 150,
-          backgroundColor: 'white',
+          width: '45%',
+          backgroundColor: '#64b3f4',
           padding: 10,
           borderRadius: 5,
         }}>
         <Text
-          style={{fontSize: 18, color: 'black', textAlign: 'center'}}
+          style={{fontSize: 18, color: 'white', textAlign: 'center'}}
           onPress={() => setModalVisible(true)}>
           Filter
         </Text>
@@ -93,15 +106,18 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
         }}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <CategoryFilter
-              company={company}
-              setModalVisible={setModalVisible}
-              modalVisible={modalVisible}
-              allProduct={allProduct}
-              setAllProduct={setAllProduct}
-              product={product}
-              categoryData={categoryData}
-            />
+            <ScrollView>
+              <CategoryFilter
+                company={company}
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+                allProduct={allProduct}
+                setAllProduct={setAllProduct}
+                product={product}
+                categoryData={categoryData}
+                colors={colors}
+              />
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -121,15 +137,15 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
   },
   selectedTextStyle: {
     fontSize: 16,
     color: 'black',
   },
 
-  iconStyle: {
-    color: 'black',
+  iconcss: {
+    color: 'white',
     fontSize: 16,
   },
   inputSearchStyle: {

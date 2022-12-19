@@ -19,6 +19,8 @@ const ShowProductsList = () => {
 
       <FlatList
         data={route?.params?.newState}
+        numColumns={2}
+      
         renderItem={(item, id) => {
           return (
             <View style={styles.productImageContent} key={id}>
@@ -30,7 +32,8 @@ const ShowProductsList = () => {
                   alignItems: 'center',
                   backgroundColor: 'white',
                   marginBottom: 10,
-                }}>
+                }}
+                >
                 <View
                   style={{
                     borderBottomColor: 'black',
