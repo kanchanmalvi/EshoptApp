@@ -4,6 +4,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch} from 'react-redux';
 import {sorting} from '../features/AllProducts/allProductsSlice';
 import CategoryFilter from './CategoryFilter';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const data = [
   {label: 'Price (Lowest)', value: 'Lowest'},
@@ -52,16 +53,15 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
     }
   };
 
-    //CompanyWiseFilter
-    const getPriceData = (data, range) => {
-      let newval = data.map(i => {
-        return i[range];
-      });
-       let ee = Math.max(...newval)
-       console.log(ee, "newval")
-      return ee;
-    
-    };
+  //CompanyWiseFilter
+  const getPriceData = (data, range) => {
+    let newval = data.map(i => {
+      return i[range];
+    });
+    let ee = Math.max(...newval);
+    console.log(ee, 'newval');
+    return ee;
+  };
   const categoryData = getCategoryData(product?.sortingProduct, 'category');
   const company = getCompanyData(product?.sortingProduct, 'company');
   const colors = getColorsData(product?.sortingProduct, 'colors');
@@ -81,7 +81,7 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
           inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconcss}
+          iconStyle={styles.iconStyle}
           data={data}
           search
           maxHeight={300}
@@ -105,7 +105,7 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
         <Text
           style={{fontSize: 18, color: 'white', textAlign: 'center'}}
           onPress={() => setModalVisible(true)}>
-          Filter
+          <AntDesign name="filter" size={15} /> Filter
         </Text>
       </View>
 
@@ -152,15 +152,15 @@ const styles = StyleSheet.create({
   placeholderStyle: {
     fontSize: 18,
     color: 'white',
+    textAlign: 'center',
   },
   selectedTextStyle: {
     fontSize: 16,
     color: 'black',
   },
 
-  iconcss: {
-    color: 'white',
-    fontSize: 16,
+  iconStyle: {
+    display: 'none',
   },
   inputSearchStyle: {
     height: 40,

@@ -173,6 +173,7 @@ const CategoryFilter = ({
               style={{width: 200, height: 50}}
               maximumValue={1000}
               minimumValue={0}
+              
             />
           </Text>
         </View>

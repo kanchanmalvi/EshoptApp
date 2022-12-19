@@ -174,17 +174,17 @@ export default function PostForm() {
           setProcess('');
         });
         setImage(null);
-        const img = [
-          'https://firebasestorage.googleapis.com/v0/b/newestoreprojectwithfirebase.appspot.com/o/2022-11-08%20(1).png?alt=media&token=99bd01c4-479c-4448-bdd9-67244ea79026',
-        ];
+        // const img = [
+        //   'https://firebasestorage.googleapis.com/v0/b/newestoreprojectwithfirebase.appspot.com/o/2022-11-08%20(1).png?alt=media&token=99bd01c4-479c-4448-bdd9-67244ea79026',
+        // ];
         database()
           .ref('/products/10')
           .push({
-            value: {name, brand, price, desc, img: image},
+            value: {name, brand, price, desc, image},
           })
           .then(
             () => {
-              console.log('data set shiw', name, brand, price, desc, img);
+              console.log('data set shiw', name, brand, price, desc, image);
             },
             setName(''),
             setBrand(''),
