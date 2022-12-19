@@ -51,9 +51,22 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
       return (newval = ['All', ...new Set(newval)]);
     }
   };
+
+    //CompanyWiseFilter
+    const getPriceData = (data, range) => {
+      let newval = data.map(i => {
+        return i[range];
+      });
+       let ee = Math.max(...newval)
+       console.log(ee, "newval")
+      return ee;
+    
+    };
   const categoryData = getCategoryData(product?.sortingProduct, 'category');
   const company = getCompanyData(product?.sortingProduct, 'company');
   const colors = getColorsData(product?.sortingProduct, 'colors');
+
+  const price = getPriceData(product?.sortingProduct, 'price');
 
   return (
     <View style={styles.container}>
@@ -116,6 +129,7 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
                 product={product}
                 categoryData={categoryData}
                 colors={colors}
+                price={price}
               />
             </ScrollView>
           </View>

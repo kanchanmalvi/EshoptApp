@@ -1,5 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
+import Slider from '@react-native-community/slider';
+import FormatePrice from '../helpers/FormatePrice';
+import {Button} from '@rneui/themed';
 
 const CategoryFilter = ({
   company,
@@ -9,7 +12,9 @@ const CategoryFilter = ({
   setAllProduct,
   categoryData,
   colors,
+  price,
 }) => {
+  // const [inputRange, setInputRange] = useState(price);
   const categoryWise = value => {
     let arr = [];
     let temp = product?.sortingProduct;
@@ -39,6 +44,30 @@ const CategoryFilter = ({
     let temp = product?.sortingProduct;
     if (value != 'All') {
       arr = temp?.filter(i => i.colors.includes(value));
+    } else {
+      arr = temp;
+    }
+    setAllProduct(arr);
+    setModalVisible(!modalVisible);
+  };
+
+  const priceWise = () => {
+    let arr = [];
+    let temp = product?.sortingProduct;
+    if (price === 0) {
+      arr = temp.filter(curElem => curElem.price == price);
+    } else {
+      arr = temp.filter(curElem => curElem.price <= price);
+    }
+    setAllProduct(arr);
+    setModalVisible(!modalVisible);
+  };
+
+  const filterdata = value => {
+    let arr = [];
+    let temp = product?.sortingProduct;
+    if (value === 'All') {
+      arr = temp?.filter(i => i?.company === value);
     } else {
       arr = temp;
     }
@@ -126,6 +155,33 @@ const CategoryFilter = ({
             );
           })}
         </View>
+      </View>
+
+      <View>
+        <Text style={styles.modalText}>Filtered By Price </Text>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text>
+            <FormatePrice price={price} />
+          </Text>
+          <Text>
+            <Slider
+              style={{width: 200, height: 50}}
+              maximumValue={1000}
+              minimumValue={0}
+            />
+          </Text>
+        </View>
+      </View>
+
+      <View style={{margin: 10}}>
+        <Button color="error" onPress={filterdata}>
+          Clear Filter
+        </Button>
       </View>
     </View>
   );
