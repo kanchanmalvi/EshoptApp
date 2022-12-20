@@ -65,7 +65,6 @@ const DropdownComponent = ({allProduct, setAllProduct, product}) => {
   const categoryData = getCategoryData(product?.sortingProduct, 'category');
   const company = getCompanyData(product?.sortingProduct, 'company');
   const colors = getColorsData(product?.sortingProduct, 'colors');
-
   const price = getPriceData(product?.sortingProduct, 'price');
 
   return (

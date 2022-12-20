@@ -4,6 +4,8 @@ import {useAuth0} from 'react-native-auth0';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import HomePage from './HomePage';
+import Navbar from './Navbar';
+import TabNavigation from '../navigateScreens/TabNavigation';
 
 const EntryPoint = () => {
   const Navigation = useNavigation();
@@ -12,7 +14,7 @@ const EntryPoint = () => {
   const onPress = async () => {
     try {
       await authorize();
-      Navigation.navigate('homepage');
+      Navigation.navigate('Explore Now');
     } catch (e) {
       console.log(e);
     }
@@ -32,7 +34,7 @@ const EntryPoint = () => {
           </ImageBackground>
         </View>
       ) : (
-        <HomePage />
+        <TabNavigation />
       )}
     </View>
   );

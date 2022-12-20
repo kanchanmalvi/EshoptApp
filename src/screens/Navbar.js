@@ -11,23 +11,21 @@ import {
 import React from 'react';
 import {Button, Card} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
-
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {testapi} from '../features/AllProducts/allProductsSlice';
+import {useAuth0} from 'react-native-auth0';
+import Footer from '../components/Footer';
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const {user} = useAuth0();
   const Navigation = useNavigation();
   // useEffect(() => {
   //   let url = 'products';
   //   dispatch(testapi(url));
   // }, [dispatch]);
-
-  const onPress = async () => {
-    Navigation.toggleDrawer();
-  };
 
   const win = Dimensions.get('window');
 
@@ -36,20 +34,36 @@ const Navbar = () => {
   return (
     <ScrollView>
       <View style={styles.baseStyle}>
-        <Text style={styles.innerText}> 😍 Good To See You</Text>
-        <TouchableOpacity onPress={onPress}>
-          <Icon
-            name="bars"
-            style={{
-              fontSize: 30,
-              fontWeight: 'bold',
-              color: 'white',
-              backgroundColor: 'black',
-              padding: 10,
-              borderRadius: 50,
-            }}
-          />
-        </TouchableOpacity>
+        <View>
+          <Text style={styles.innerText}>😍 Good To See You</Text>
+          {user && (
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 20,
+                textAlign: 'left',
+                margin: 10,
+              }}>
+              {user.name}
+            </Text>
+          )}
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={() => Navigation.toggleDrawer()}>
+            <Icon
+              name="bars"
+              style={{
+                fontSize: 30,
+                fontWeight: 'bold',
+                color: 'white',
+                backgroundColor: 'black',
+                padding: 10,
+                borderRadius: 50,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -148,7 +162,6 @@ const styles = StyleSheet.create({
   innerText: {
     color: '#fd746c',
     fontSize: 25,
-    marginTop: 10,
     fontWeight: 'bold',
   },
   innerTextgiven: {
@@ -156,7 +169,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
   },
-
+  text: {
+    textAlign: 'center',
+    fontSize: 15,
+  },
   allProductStyles: {},
   featureProductStyles: {},
 });

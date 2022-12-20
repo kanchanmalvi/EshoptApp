@@ -9,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const EntryPoint = () => {
+const WelcomeScreen = () => {
   const Navigation = useNavigation();
 
   const onPress = () => {
@@ -69,4 +69,4 @@ const styles = StyleSheet.create({
     left: 30,
   },
 });
-export default EntryPoint;
+export default WelcomeScreen;

@@ -5,15 +5,18 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useAuth0} from 'react-native-auth0';
+import {Overlay} from 'react-native-elements';
 
-const UserProfile = ({closeOverlay}) => {
+const UserProfile = ({goBack}) => {
+  const [visible, setVisible] = useState(false);
   const {user, clearSession} = useAuth0();
 
   const Navigation = useNavigation();
@@ -23,15 +26,14 @@ const UserProfile = ({closeOverlay}) => {
       await clearSession();
       Navigation.navigate('welcomescreen');
       Alert.alert(`😔 ${user.name} is Logout. `);
-      closeOverlay(false);
+      setVisible(false);
     } catch (e) {
       console.log(e);
     }
   };
 
   const ContinueShop = () => {
-    Navigation.navigate('homepage');
-    closeOverlay(false);
+    Navigation.navigate('Explore Now');
   };
 
   return (
@@ -97,6 +99,7 @@ const UserProfile = ({closeOverlay}) => {
           <Button
             buttonStyle={{
               backgroundColor: 'red',
+              margin:10
             }}
             style={[styles.textStyles, styles.btn]}
             title="Logout"
@@ -117,18 +120,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 100,
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   linearGradient: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 5,
-
     padding: 10,
-    width: 350,
     display: 'flex',
   },
   btntextContinue: {
@@ -142,12 +138,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   infoView: {
-    marginBottom: 30,
+    marginBottom:10,
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
   },
   infoText: {
-    marginBottom: 10,
+    marginBottom: 20,
     color: 'black',
     fontSize: 15,
     fontFamily: 'Nunito-Regular',

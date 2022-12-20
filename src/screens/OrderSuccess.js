@@ -43,7 +43,7 @@ const EntryPoint = () => {
           end={{x: 1, y: 0.5}}>
           <TouchableOpacity
             style={styles.btntextContinue}
-            onPress={() => Navigation.navigate('homepage')}>
+            onPress={() => Navigation.navigate('Explore Now')}>
             <Text style={{color: 'white', textAlign: 'center', fontSize: 20}}>
               <Ionicons name="ios-arrow-undo-outline" size={20} /> Back To Home
             </Text>

@@ -1,47 +1,18 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-
-} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {useAuth0} from 'react-native-auth0';
-import DrawerSide from './src/navigateScreens/DrawerSidebar';
-import Footer from './src/components/Footer';
-import EntryPoint from './src/screens/EntryPoint';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import StackScreens from './src/navigateScreens/StackScreens';
-import {WelcomeScreen} from './src/screens';
 
+const Stack = createNativeStackNavigator();
 const App = () => {
-
-  const {authorize, user} = useAuth0();
-
-  const onPress = async () => {
-    try {
-      await authorize();
-    } catch (error) {
-      console.log(error, 'error');
-    }
-  };
-
-
   return (
     <NavigationContainer>
-      <DrawerSide />
-
-      {/* <Footer/> */}
+      <StackScreens />
     </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({});
 export default App;
-
-// {!user ? (
-//   <View onPress={onPress}>
-//     <EntryPoint />
-//   </View>
-// ) : (
-//   <DrawerSide />
-// )}
