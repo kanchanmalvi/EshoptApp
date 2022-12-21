@@ -4,12 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import StackScreens from './src/navigateScreens/StackScreens';
+import DrawerSide from './src/navigateScreens/DrawerSidebar';
 
 const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <StackScreens />
+     <DrawerSide/>
     </NavigationContainer>
   );
 };

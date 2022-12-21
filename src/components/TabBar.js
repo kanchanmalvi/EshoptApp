@@ -5,7 +5,7 @@ import Sorting from '../components/Sorting';
 
 const TabBar = ({allProduct,setAllProduct,product}) => {
   return (
-    <View>
+    <View style={{}}>
       <View style={styles.Dropdown}>
         <DropdownComponent allProduct={allProduct} setAllProduct={setAllProduct} product={product}/>
       </View>

@@ -4,9 +4,7 @@ import {
   View,
   Image,
   TouchableOpacity,
-  RefreshControl,
   ScrollView,
-  FlatList,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {testapi} from '../features/AllProducts/allProductsSlice';
@@ -15,12 +13,16 @@ import FormatePrice from '../helpers/FormatePrice';
 import TabBar from '../components/TabBar';
 import {useNavigation} from '@react-navigation/native';
 import {SearchBar} from '@rneui/themed';
+import MasonryList from '@react-native-seoul/masonry-list';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const ProductFlatlist = () => {
-  const [refresh, setRefresh] = useState(false);
+  // const [refresh, setRefresh] = useState(false);
   const [search, setSearch] = useState('');
   const [allProduct, setAllProduct] = useState(product?.sortingProduct);
   const product = useSelector(state => state.products);
+  const prodetails = useSelector(state => state.productDetails);
+  console.log(product, 'starts');
   const Navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -37,16 +39,36 @@ const ProductFlatlist = () => {
     Navigation.navigate('productdetails', {id: id});
   };
 
-  const pull = () => {
-    setRefresh(true);
+  // const pull = () => {
+  //   setRefresh(true);
 
-    setTimeout(() => {
-      setRefresh(false);
-    }, 2000);
-  };
+  //   setTimeout(() => {
+  //     setRefresh(false);
+  //   }, 2000);
+  // };
+
+  const {stars} = prodetails?.product;
+
+  const ratingStar = Array.from({length: 5}, (elem, index) => {
+    let number = index + 0.5;
+
+    return (
+      <View key={index}>
+        <Text>
+          {stars >= index + 1 ? (
+            <Icon name="star" style={styles.iconStyle} />
+          ) : stars >= number ? (
+            <Icon name="star-half" style={styles.iconStyle} />
+          ) : (
+            <Icon name="star-outline" style={styles.iconStyle} />
+          )}
+        </Text>
+      </View>
+    );
+  });
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.aa}>
         <SearchBar
           style={{color: 'white', fontSize: 16}}
@@ -65,15 +87,13 @@ const ProductFlatlist = () => {
         />
       </View>
 
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refresh} onRefresh={() => pull()} />
-        }>
-        <FlatList
+      <ScrollView style={{marginTop: 5}}>
+        <MasonryList
           data={allProduct?.filter(e =>
             e.name.toLowerCase().includes(search.toLowerCase()),
           )}
-          refreshing={true}
+          numColumns={2}
+          refreshing={false}
           keyExtractor={item => `${item.id}`}
           renderItem={({item}) => {
             return (
@@ -84,58 +104,45 @@ const ProductFlatlist = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: 'white',
-                    marginBottom: 10,
                   }}>
-                  <View
-                    style={{
-                      borderBottomColor: 'black',
-                      borderBottomWidth: 3,
-                    }}>
-                    <Image
-                      source={{uri: item?.image}}
-                      style={{width: 250, height: 200, margin: 10}}
-                    />
+                  <View style={{}}>
+                    <TouchableOpacity onPress={() => productDetails(item?.id)}>
+                      <Image
+                        source={{uri: item?.image}}
+                        style={{
+                          width: 150,
+                          height: 200,
+                          margin: 10,
+                          borderRadius: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
                   </View>
 
                   <View style={{width: '50%'}}>
                     <Text
                       style={{
                         textAlign: 'center',
-                        fontSize: 20,
                         color: 'black',
                         marginTop: 5,
                       }}>
                       {item?.name}
                     </Text>
                     <Text style={{textAlign: 'center'}}>{item?.company}</Text>
-
-                    <Text style={{textAlign: 'center'}}>
-                      {item?.description.slice(0, 48)}...
-                    </Text>
-
                     <Text
                       style={{
-                        color: '#A43931',
+                        color: '#5f9ea0',
                         margin: 10,
+                        fontWeight: 'bold',
                         textAlign: 'center',
-                        fontSize: 20,
                       }}>
                       {<FormatePrice price={item?.price} />}
                     </Text>
-                  </View>
 
-                  <TouchableOpacity style={styles.btnStyle}>
-                    <Text
-                      onPress={() => productDetails(item?.id)}
-                      style={{
-                        textAlign: 'center',
-                        fontSize: 18,
-                        color: 'white',
-                      }}>
-                      View Details
+                    <Text style={{textAlign: 'center', fontSize: 20}}>
+                      {ratingStar}
                     </Text>
-                  </TouchableOpacity>
+                  </View>
                 </View>
               </View>
             );
@@ -147,14 +154,6 @@ const ProductFlatlist = () => {
 };
 
 const styles = StyleSheet.create({
-  productImageContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-
-    borderWidth: 0.5,
-    borderColor: '#556b2f',
-  },
   btnStyle: {
     backgroundColor: '#E0D72E',
     margin: 10,
@@ -182,6 +181,10 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderColor: 'white',
     padding: 5,
+  },
+  iconStyle: {
+    fontSize: 18,
+    color: '#dfb726d1',
   },
 });
 export default ProductFlatlist;

@@ -11,14 +11,15 @@ import {testapi} from '../features/AllProducts/allProductsSlice';
 import {useDispatch, useSelector} from 'react-redux';
 import FormatePrice from '../helpers/FormatePrice';
 import {useNavigation} from '@react-navigation/native';
+import MasonryList from '@react-native-seoul/masonry-list';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const FeaturedProductList = () => {
   const dispatch = useDispatch();
   const Navigation = useNavigation();
 
   const product = useSelector(state => state.products);
-
-
+  const prodetails = useSelector(state => state.productDetails);
   useEffect(() => {
     dispatch(testapi());
   }, [dispatch]);
@@ -27,106 +28,113 @@ const FeaturedProductList = () => {
     Navigation.navigate('productdetails', {id: id});
   };
 
+  const {stars} = prodetails?.product;
+
+  const ratingStar = Array.from({length: 5}, (elem, index) => {
+    let number = index + 0.5;
+
+    return (
+      <View key={index}>
+        <Text>
+          {stars >= index + 1 ? (
+            <Icon name="star" style={styles.iconStyle} />
+          ) : stars >= number ? (
+            <Icon name="star-half" style={styles.iconStyle} />
+          ) : (
+            <Icon name="star-outline" style={styles.iconStyle} />
+          )}
+        </Text>
+      </View>
+    );
+  });
+
   return (
-    <ScrollView>
+    <View style={{backgroundColor: 'white', height: '100%'}}>
       <View>
-        <Text style={{textAlign:"left", fontSize:25, fontWeight:"bold", color:"black", margin:10}}>Featured Product</Text>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 30,
+            color: '#0575E6',
+            margin: 10,
+          }}>
+          Featured Product
+        </Text>
       </View>
 
-      {product?.products
-        ?.filter(e => e.featured === true)
-        .map((data, id) => {
-          return (
-            <View style={styles.productImageContent} key={id}>
-              <View
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: 'white',
-                  marginBottom: 10,
-                }}>
+      <ScrollView>
+        <MasonryList
+          data={product?.products?.filter(e => e.featured === true)}
+          numColumns={2}
+          refreshing={false}
+          keyExtractor={item => `${item.id}`}
+          renderItem={({item}) => {
+            return (
+              <View style={styles.productImageContent}>
                 <View
                   style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 3,
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: 'white',
                   }}>
-                  <Image
-                    source={{uri: data.image}}
-                    style={{width: 250, height: 200, margin: 10}}
-                  />
+                  <View>
+                    <TouchableOpacity onPress={() => productDetails(item.id)}>
+                      <Image
+                        source={{uri: item.image}}
+                        style={{
+                          width: 150,
+                          height: 200,
+                          margin: 10,
+                          borderRadius: 10,
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+
+                  <View style={{width: '50%'}}>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: 'black',
+                        marginTop: 5,
+                      }}>
+                      {item.name}
+                    </Text>
+                    <Text style={{textAlign: 'center'}}>{item.company}</Text>
+
+                    <Text
+                      style={{
+                        color: '#5f9ea0',
+                        margin: 10,
+                        textAlign: 'center',
+                      }}>
+                      {<FormatePrice price={item.price} />}
+                    </Text>
+
+                    <Text style={{textAlign: 'center', fontSize: 20}}>
+                      {ratingStar}
+                    </Text>
+                  </View>
                 </View>
-
-                <View style={{width: '50%'}}>
-                  <Text
-                    style={{
-                      textAlign: 'center',
-                      fontSize: 20,
-                      color: 'black',
-                      marginTop: 5,
-                    }}>
-                    {data.name}
-                  </Text>
-                  <Text style={{textAlign: 'center'}}>{data.company}</Text>
-
-                  <Text style={{textAlign: 'center'}}>
-                    {data.description.slice(0, 48)}...
-                  </Text>
-
-                  <Text
-                    style={{
-                      color: '#5f9ea0',
-                      margin: 10,
-                      textAlign: 'center',
-                    }}>
-                    {<FormatePrice price={data.price} />}
-                  </Text>
-                </View>
-
-                <TouchableOpacity style={styles.btnStyle}>
-                  <Text
-                    onPress={() => productDetails(data.id)}
-                    style={{
-                      textAlign: 'center',
-                      fontSize: 18,
-                      color: 'white',
-                    }}>
-                    View Details
-                  </Text>
-                </TouchableOpacity>
               </View>
-            </View>
-          );
-        })}
-    </ScrollView>
+            );
+          }}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  productImageContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-    margin: 10,
-    borderWidth: 1,
-    borderColor: '#9e9e9e38',
-    borderRadius: 5,
-  },
+  productImageContent: {},
   btnStyle: {
     backgroundColor: '#48d1cc',
     margin: 10,
     padding: 10,
   },
 
-  productImageContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    flexWrap: 'wrap',
-
-    borderWidth: 0.5,
-    borderColor: '#556b2f',
-  },
   btnStyle: {
     // backgroundColor: '#48d1cc',
     backgroundColor: '#E0D72E',
@@ -160,6 +168,10 @@ const styles = StyleSheet.create({
   modalView: {
     backgroundColor: 'white',
     height: '100%',
+  },
+  iconStyle: {
+    fontSize: 18,
+    color: '#dfb726d1',
   },
 });
 export default FeaturedProductList;

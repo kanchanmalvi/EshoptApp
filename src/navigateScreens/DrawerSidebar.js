@@ -10,6 +10,9 @@ import CustomSidebarMenu from '../components/CustomSidebarMenu';
 import {useWindowDimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import StackScreens from './StackScreens';
+import TabNavigation from './TabNavigation';
+import {Product} from '../screens';
 
 const Drawer = createDrawerNavigator();
 
@@ -27,23 +30,15 @@ const DrawerSide = () => {
       }}
       drawerContent={props => <CustomSidebarMenu {...props} />}>
       <Drawer.Screen
-        name="Homepage"
-        component={Sidebar}
+        name="Explore Now"
+        component={StackScreens}
         options={{
           drawerIcon: ({focused, color}) => (
             <Ionicons name="md-home" size={20} color={color} />
           ),
         }}
       />
-      <Drawer.Screen
-        name="Explore Now"
-        component={Navbar}
-        options={{
-          drawerIcon: ({focused, color}) => (
-            <Ionicons name="md-search-circle-sharp" size={25} color={color} />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name="About Us"
         component={About}

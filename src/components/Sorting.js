@@ -6,7 +6,7 @@ const Sorting = () => {
   const product = useSelector(state => state.products);
 
   return (
-    <View>
+    <View style={{backgroundColor: '#BDFFF3'}}>
       <View style={styles.textstyle}>
         <Text
           style={{
@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#BDFFF3',
+   
   },
 });
 

@@ -39,10 +39,11 @@ const Navbar = () => {
           {user && (
             <Text
               style={{
-                color: 'black',
-                fontSize: 20,
-                textAlign: 'left',
-                margin: 10,
+                color: '#5B86E5',
+                fontSize:18,
+                textAlign: 'center',
+                marginRight:10
+                
               }}>
               {user.name}
             </Text>

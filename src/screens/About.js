@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import {Card, Button, Icon} from '@rneui/themed';
 import {useNavigation} from '@react-navigation/native';
+import TabNavigation from '../navigateScreens/TabNavigation';
 
 const About = () => {
   const Navigation = useNavigation();
@@ -58,6 +59,8 @@ const About = () => {
           onPress={() => Navigation.navigate('product')}
         />
       </Card>
+
+ 
     </ScrollView>
   );
 };

@@ -24,8 +24,8 @@ const TabNavigation = () => {
               <View>
                 <Ionicons
                   name="home"
-                  size={25}
-                  color={focused ? '#22c1c3' : '#808080'}
+                  size={21}
+                  color={focused ? '#A770EF' : '#808080'}
                 />
               </View>
             );
@@ -42,8 +42,8 @@ const TabNavigation = () => {
               <View style={{position: 'relative'}}>
                 <Ionicons
                   name="heart"
-                  size={30}
-                  color={focused ? '#22c1c3' : '#808080'}
+                  size={25}
+                  color={focused ? '#A770EF' : '#808080'}
                 />
                 <View
                   style={[
@@ -71,8 +71,8 @@ const TabNavigation = () => {
               <View style={{position: 'relative'}}>
                 <FontAwesome
                   name="cart-plus"
-                  size={30}
-                  color={focused ? '#22c1c3' : '#808080'}
+                  size={25}
+                  color={focused ? '#A770EF' : '#808080'}
                 />
                 <View
                   style={[
@@ -97,8 +97,8 @@ const TabNavigation = () => {
               <View>
                 <FontAwesome
                   name="user-circle-o"
-                  size={30}
-                  color={focused ? '#22c1c3' : '#808080'}
+                  size={25}
+                  color={focused ? '#A770EF' : '#808080'}
                 />
               </View>
             );
