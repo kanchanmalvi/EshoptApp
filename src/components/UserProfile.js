@@ -37,7 +37,7 @@ const UserProfile = ({goBack}) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <LinearGradient
         colors={['#22c1c3', '#fdbb2d']}
         style={styles.linearGradient}
@@ -82,16 +82,20 @@ const UserProfile = ({goBack}) => {
           <Text style={styles.acountInfo}>Account Info</Text>
         </View>
         <View style={styles.infoView}>
-          <Text style={styles.infoText}>NAME : {user?.name}</Text>
+          <Text style={styles.infoText}>NAME </Text>
+          <Text style={styles.infoText}>{user?.name}</Text>
         </View>
         <View style={styles.infoView}>
-          <Text style={styles.infoText}>GIVEN-NAME : {user?.given_name}</Text>
+          <Text style={styles.infoText}>GIVEN_NAME </Text>
+          <Text style={styles.infoText}>{user?.given_name}</Text>
         </View>
         <View style={styles.infoView}>
-          <Text style={styles.infoText}>EMAIL : {user?.email}</Text>
+          <Text style={styles.infoText}>EMAIL </Text>
+          <Text style={styles.infoText}>{user?.email}</Text>
         </View>
         <View style={styles.infoView}>
-          <Text style={styles.infoText}>USERNAME :{user?.nickname}</Text>
+          <Text style={styles.infoText}>USERNAME </Text>
+          <Text style={styles.infoText}>{user?.nickname}</Text>
         </View>
       </View>
       <View>
@@ -99,7 +103,7 @@ const UserProfile = ({goBack}) => {
           <Button
             buttonStyle={{
               backgroundColor: 'red',
-              margin:10
+              margin: 10,
             }}
             style={[styles.textStyles, styles.btn]}
             title="Logout"
@@ -108,7 +112,7 @@ const UserProfile = ({goBack}) => {
           />
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -138,14 +142,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   infoView: {
-    marginBottom:10,
+    marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#d3d3d3',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
+
   infoText: {
     marginBottom: 20,
     color: 'black',
     fontSize: 15,
+    textAlign: 'left',
     fontFamily: 'Nunito-Regular',
   },
 });

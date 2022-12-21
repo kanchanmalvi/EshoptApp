@@ -135,6 +135,7 @@ const ProductFlatlist = () => {
                         margin: 10,
                         fontWeight: 'bold',
                         textAlign: 'center',
+                        fontSize:12
                       }}>
                       {<FormatePrice price={item?.price} />}
                     </Text>
