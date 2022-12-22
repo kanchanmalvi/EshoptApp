@@ -14,7 +14,7 @@ const CategoryFilter = ({
   colors,
   price,
 }) => {
-  // const [inputRange, setInputRange] = useState(price);
+  const [inputRange, setInputRange] = useState(price);
   const categoryWise = value => {
     let arr = [];
     let temp = product?.sortingProduct;
@@ -51,16 +51,19 @@ const CategoryFilter = ({
     setModalVisible(!modalVisible);
   };
 
-  const priceWise = () => {
+  const priceWise = inputRange => {
+    setInputRange(inputRange);
     let arr = [];
     let temp = product?.sortingProduct;
-    if (price === 0) {
-      arr = temp.filter(curElem => curElem.price == price);
-    } else {
-      arr = temp.filter(curElem => curElem.price <= price);
-    }
+    arr = temp.filter(curElem => curElem.price == inputRange);
+    console.log(arr, "arr")
     setAllProduct(arr);
-    setModalVisible(!modalVisible);
+
+    // // if (inputRange === 0) {
+    // //   arr = temp.filter(curElem => curElem.price == inputRange);
+    // // } else {
+    //   arr = temp.filter(curElem => curElem.price <= inputRange);
+    // // }
   };
 
   const filterdata = value => {
@@ -72,7 +75,7 @@ const CategoryFilter = ({
       arr = temp;
     }
     setAllProduct(arr);
-    setModalVisible(!modalVisible);
+    // setModalVisible(!modalVisible);
   };
 
   return (
@@ -166,16 +169,22 @@ const CategoryFilter = ({
             alignItems: 'center',
           }}>
           <Text>
-            <FormatePrice price={price} />
+            <FormatePrice price={inputRange} />
           </Text>
-          <Text>
-            <Slider
-              style={{width: 200, height: 50}}
-              maximumValue={1000}
-              minimumValue={0}
-              
-            />
-          </Text>
+          <View>
+            <Text>
+              <Slider
+                style={{width: 200}}
+                maximumValue={price}
+                minimumValue={0}
+                minimumTrackTintColor="#24ad90"
+                maximumTrackTintColor="#000000"
+                value={inputRange}
+                onValueChange={priceWise}
+                onSlidingComplete={() => setModalVisible(false)}
+              />
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -215,6 +224,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     padding: 10,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    width: 300,
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
   },
 });
 export default CategoryFilter;

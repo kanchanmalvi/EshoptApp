@@ -20,6 +20,7 @@ import {
 } from '../screens';
 import TabNavigation from './TabNavigation';
 
+
 const Stack = createNativeStackNavigator();
 
 const NestingNavigation = () => {
@@ -61,9 +62,8 @@ const NestingNavigation = () => {
         component={AddProductCartDetails}
         options={{headerShown: false}}
       />
-
-     
-    </Stack.Navigator>
+    
+       </Stack.Navigator>
   );
 };
 
