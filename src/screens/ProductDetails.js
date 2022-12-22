@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ToastAndroid,
+  FlatList,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FormatePrice from '../helpers/FormatePrice';
@@ -66,8 +67,37 @@ const ProductDetails = ({route}) => {
 
   return (
     <ScrollView>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {Array.isArray(image) &&
+      <ScrollView>
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {Array.isArray(image) && (
+            <FlatList
+              data={prodetails?.product?.image}
+              keyExtractor={item => item.id}
+              numColumns={2}
+              renderItem={({item}) => {
+                return (
+                  <Image
+                    source={{uri: item?.url ? item.url.trim() : ''}}
+                    resizeMode="cover"
+                    style={{
+                      width: 150,
+                      height: 170,
+                      margin: 10,
+                      borderRadius: 10,
+                    }}
+                  />
+                );
+              }}
+            />
+          )}
+        </View>
+
+        {/* {Array.isArray(image) &&
           prodetails?.product?.image.map((e, i) => {
             return (
               <Image
@@ -82,7 +112,7 @@ const ProductDetails = ({route}) => {
                 }}
               />
             );
-          })}
+          })} */}
       </ScrollView>
       <Text style={styles.heading}>{company}</Text>
       <Text style={styles.heading}> Brand -{name}</Text>
