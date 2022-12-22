@@ -24,7 +24,7 @@ const DrawerSide = () => {
       drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
       screenOptions={{
         headerShown: false,
-        drawerActiveBackgroundColor: '#fe8c00',
+        drawerActiveBackgroundColor: '#ACB6E5',
         drawerActiveTintColor: 'white',
         drawerLabelStyle: {marginLeft: -20},
       }}

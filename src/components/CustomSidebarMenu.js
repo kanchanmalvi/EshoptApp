@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/drawer';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useAuth0} from 'react-native-auth0';
+import LinearGradient from 'react-native-linear-gradient';
 
 const CustomSidebarMenu = props => {
   const {clearSession, user} = useAuth0();
@@ -20,30 +21,35 @@ const CustomSidebarMenu = props => {
   };
   return (
     <View style={{flex: 1}}>
-      <View style={{backgroundColor: '#fe8c00'}}>
-        <Image
-          source={require('../../Assets/eshoplogo.png')}
-          style={{
-            height: 150,
-            width: 150,
-            resizeMode: 'center',
-            alignSelf: 'center',
-            backgroundColor: 'white',
-            borderRadius: 80,
-            margin: 10,
-          }}
-        />
-        <Text
-          style={{
-            textAlign: 'center',
-            fontSize: 25,
-            fontWeight: '900',
-            color: 'white',
-            marginBottom: 15,
-          }}>
-          {user?.given_name}
-        </Text>
-      </View>
+   
+        <LinearGradient
+          colors={['#74ebd5', '#ACB6E5']}
+          start={{x: 0, y: 0.5}}
+          end={{x: 1, y: 0.5}}>
+          <Image
+            source={require('../../Assets/eshoplogo.png')}
+            style={{
+              height: 100,
+              width: 200,
+              resizeMode: 'center',
+              alignSelf: 'center',
+              backgroundColor: 'white',
+              borderRadius: 5,
+              margin: 10,
+            }}
+          />
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 25,
+              fontWeight: '900',
+              color: 'white',
+              marginBottom: 15,
+            }}>
+            {user?.given_name}
+          </Text>
+        </LinearGradient>
+    
 
       <DrawerContentScrollView
         {...props}
@@ -52,7 +58,7 @@ const CustomSidebarMenu = props => {
       </DrawerContentScrollView>
       <View
         style={{
-          backgroundColor: '#FF2E2E',
+          backgroundColor: 'red',
           flexDirection: 'row',
           justifyContent: 'flex-start',
           padding: 20,
@@ -80,4 +86,4 @@ const CustomSidebarMenu = props => {
 };
 
 const styles = StyleSheet.create({});
-export default CustomSidebarMenu; 
+export default CustomSidebarMenu;

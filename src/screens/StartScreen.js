@@ -1,6 +1,5 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
-
 import {useNavigation} from '@react-navigation/native';
 
 const StartScreen = () => {
@@ -68,6 +67,11 @@ const StartScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  sectionHeading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+  },
   EntryPointstyle: {
     height: '100%',
   },
