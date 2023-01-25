@@ -48,7 +48,6 @@ export const allProductsSlice = createSlice({
       console.log('fulfilledxyz', state, action);
       state.products = action.payload;
       state.sortingProduct = [...action.payload];
-    
     });
 
     builder.addCase(testapi.rejected, (state, action) => {
@@ -59,3 +58,5 @@ export const allProductsSlice = createSlice({
 
 export const {sorting} = allProductsSlice.actions;
 export default allProductsSlice.reducer;
+
+// for run backend api in android amulator http://10.0.2.2:5000/api/products

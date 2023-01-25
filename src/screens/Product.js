@@ -113,7 +113,7 @@ const ProductFlatlist = () => {
                           width: 150,
                           height: 200,
                           margin: 10,
-                          borderRadius: 10,
+                          borderRadius: 5,
                         }}
                       />
                     </TouchableOpacity>
@@ -135,7 +135,7 @@ const ProductFlatlist = () => {
                         margin: 10,
                         fontWeight: 'bold',
                         textAlign: 'center',
-                        fontSize:12
+                        fontSize: 12,
                       }}>
                       {<FormatePrice price={item?.price} />}
                     </Text>

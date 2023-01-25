@@ -43,7 +43,7 @@ const Login = () => {
             setEmail(''), setPassword('');
             AsyncStorage.setItem('email', email);
             AsyncStorage.setItem('password', password);
-            Navigation.navigate('postform', {
+            Navigation.navigate('adminaddfrom', {
               email: getEmailValue,
               password: getPassValue,
             });
@@ -74,7 +74,7 @@ const Login = () => {
   }, []);
   useEffect(() => {
     if (getEmailValue && getPassValue) {
-      Navigation.navigate('postform', {
+      Navigation.navigate('adminaddfrom', {
         email: getEmailValue,
         password: getPassValue,
       });

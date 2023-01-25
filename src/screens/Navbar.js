@@ -40,10 +40,9 @@ const Navbar = () => {
             <Text
               style={{
                 color: '#5B86E5',
-                fontSize:18,
+                fontSize: 18,
                 textAlign: 'center',
-                marginRight:10
-                
+                marginRight: 10,
               }}>
               {user.name}
             </Text>

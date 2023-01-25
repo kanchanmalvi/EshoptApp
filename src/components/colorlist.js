@@ -96,3 +96,39 @@ const styles = StyleSheet.create({
 });
 
 export default Project1;
+
+
+
+// let headers = {
+//   Accept: '*/*',
+//   'Content-Type': 'application/json',
+//   Authorization: 'Bearer ' + token,
+// }
+
+// let configObject = {
+//   headers: headers,
+// }
+
+// const submit = async (aa: any) => {
+//   let body = {
+//     barcode: parseInt(aa.product_barcode),
+//     name: aa.product_name,
+//     product_description: aa.product_description,
+//     quantity: parseInt(aa.product_quantity),
+//     category: aa.product_category,
+//     unit: aa.product_unit,
+//     price: parseInt(aa.product_price),
+//   }
+//   console.log(body, configObject, 'formdata')
+//   try {
+//     const response = await axios.post(
+//       'http://192.168.1.21:8000/api/product',
+//       body,
+//       configObject,
+//     )
+//     // const myData = response.data
+//     console.log(response, '26')
+//   } catch (error) {
+//     console.log(error, 'testing error')
+//   }
+// }

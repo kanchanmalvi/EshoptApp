@@ -21,35 +21,33 @@ const CustomSidebarMenu = props => {
   };
   return (
     <View style={{flex: 1}}>
-   
-        <LinearGradient
-          colors={['#74ebd5', '#ACB6E5']}
-          start={{x: 0, y: 0.5}}
-          end={{x: 1, y: 0.5}}>
-          <Image
-            source={require('../../Assets/eshoplogo.png')}
-            style={{
-              height: 100,
-              width: 200,
-              resizeMode: 'center',
-              alignSelf: 'center',
-              backgroundColor: 'white',
-              borderRadius: 5,
-              margin: 10,
-            }}
-          />
-          <Text
-            style={{
-              textAlign: 'center',
-              fontSize: 25,
-              fontWeight: '900',
-              color: 'white',
-              marginBottom: 15,
-            }}>
-            {user?.given_name}
-          </Text>
-        </LinearGradient>
-    
+      <LinearGradient
+        colors={['#74ebd5', '#ACB6E5']}
+        start={{x: 0, y: 0.5}}
+        end={{x: 1, y: 0.5}}>
+        <Image
+          source={require('../../Assets/eshoplogo.png')}
+          style={{
+            height: 100,
+            width: 200,
+            resizeMode: 'center',
+            alignSelf: 'center',
+            backgroundColor: 'white',
+            borderRadius: 5,
+            margin: 10,
+          }}
+        />
+        <Text
+          style={{
+            textAlign: 'center',
+            fontSize: 25,
+            fontWeight: '900',
+            color: 'white',
+            marginBottom: 15,
+          }}>
+          {user?.given_name}
+        </Text>
+      </LinearGradient>
 
       <DrawerContentScrollView
         {...props}

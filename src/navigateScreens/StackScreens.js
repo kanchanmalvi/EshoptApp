@@ -19,6 +19,7 @@ import {
   StartScreen,
 } from '../screens';
 import TabNavigation from './TabNavigation';
+import AdminAddPrdctForm from '../screens/AdminSection/AdminAddPrdctForm';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,17 +66,22 @@ const StackScreens = () => {
           component={ShowProductsList}
           options={{headerShown: false}}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="postform"
           component={PostForm}
           options={{headerShown: false}}
+        /> */}
+        <Stack.Screen
+          name="adminaddfrom"
+          component={AdminAddPrdctForm}
+          options={{headerShown: false}}
         />
+
         <Stack.Screen
           name="adminscreen"
           component={AdminScreen}
           options={{headerShown: false}}
         />
-
         <Stack.Screen
           name="Explore Now"
           component={TabNavigation}

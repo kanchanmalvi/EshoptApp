@@ -56,7 +56,7 @@ const CategoryFilter = ({
     let arr = [];
     let temp = product?.sortingProduct;
     arr = temp.filter(curElem => curElem.price == inputRange);
-    console.log(arr, "arr")
+    console.log(arr, 'arr');
     setAllProduct(arr);
 
     // // if (inputRange === 0) {
