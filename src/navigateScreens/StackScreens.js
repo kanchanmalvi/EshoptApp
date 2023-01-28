@@ -20,9 +20,7 @@ import {
 } from '../screens';
 import TabNavigation from './TabNavigation';
 import AdminAddPrdctForm from '../screens/AdminSection/AdminAddPrdctForm';
-
 const Stack = createNativeStackNavigator();
-
 const StackScreens = () => {
   return (
     <>

@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View,Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
 const SignupImage = () => {
@@ -7,7 +7,7 @@ const SignupImage = () => {
       <View>
         <Image
           source={require('../../Assets/sign.png')}
-          style={{width: 150, height: 150}}
+          style={{width: 100, height: 100}}
         />
       </View>
       <View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     color: '#ffd194',
-    fontSize: 40,
+    fontSize: 35,
     fontWeight: 'bold',
   },
 });

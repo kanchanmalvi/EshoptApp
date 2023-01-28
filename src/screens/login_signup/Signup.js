@@ -10,57 +10,51 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import SignupImage from '../../components/SignupImage';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import axios from 'axios';
 
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    gender: '',
+  });
 
   const Navigation = useNavigation();
 
-  const signupBtn = () => {
-    if (!name) {
-      alert('Please fill the data');
-    } else if (!email) {
-      null;
-    } else if (!password) {
-      null;
-    } else {
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(credential => {
-          database()
-            .ref('user')
-            .set({
-              name: name,
-              email: email,
-              password: password,
-            })
-            .then(() => console.log('Data set.'));
+  const handleChange = (name, value) => {
+    setUserInfo({...userInfo, [name]: value});
+  };
 
-          console.log(
-            credential,
-            'User account created & signed in!',
-            name,
-            password,
-            email,
-          );
-          setTimeout(() => {
-            setName(''), setEmail(''), setPassword('');
-            Navigation.navigate('login');
-            ToastAndroid.showWithGravity(
-              'Create User Successfully.',
-              ToastAndroid.SHORT,
-              ToastAndroid.CENTER,
-            );
-          }, 1000);
-        })
-        .catch(error => {
-          console.error(error);
-        });
+  const onSubmit = async () => {
+    const {name, email, phone, password, confirmPassword, gender} = userInfo;
+    let body = {
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+      confirmPassword: confirmPassword,
+      gender: gender,
+    };
+    console.log(body, 'xfdfdg');
+
+    let headersObj = {
+      headers: {
+        Accept: '*/*',
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      let url = 'http://10.0.2.2:5000/register';
+      let res = await axios.post(url, body, headersObj);
+      console.log(res, 'api response create');
+      Navigation.navigate('login');
+    } catch (error) {
+      console.log(error, 'error');
     }
+    console.log(userInfo, 'data');
   };
 
   return (
@@ -71,10 +65,9 @@ const Signup = () => {
           <TextInput
             placeholder="Enter the Name"
             errorStyle={{color: 'red'}}
-            value={name}
-            onChangeText={e => {
-              setName(e);
-            }}
+            value={userInfo?.name}
+            name="name"
+            onChangeText={text => handleChange('name', text)}
             style={styles.input}
           />
         </View>
@@ -82,11 +75,10 @@ const Signup = () => {
         <View style={{marginVertical: 10}}>
           <TextInput
             placeholder="Enter the Email"
+            name="email"
             errorStyle={{color: 'red'}}
-            value={email}
-            onChangeText={e => {
-              setEmail(e);
-            }}
+            value={userInfo?.email}
+            onChangeText={text => handleChange('email', text)}
             style={styles.input}
           />
         </View>
@@ -94,16 +86,47 @@ const Signup = () => {
           <TextInput
             placeholder="Enter the Password"
             errorStyle={{color: 'red'}}
-            value={password}
-            onChangeText={e => {
-              setPassword(e);
-            }}
+            name="password"
+            value={userInfo?.password}
+            onChangeText={text => handleChange('password', text)}
             style={styles.input}
             secureTextEntry={true}
           />
         </View>
+        <View style={{marginVertical: 10}}>
+          <TextInput
+            placeholder="Enter Confirm Password"
+            errorStyle={{color: 'red'}}
+            name="confirmPassword"
+            value={userInfo?.confirmPassword}
+            onChangeText={text => handleChange('confirmPassword', text)}
+            style={styles.input}
+            secureTextEntry={true}
+          />
+        </View>
+        <View style={{marginVertical: 10}}>
+          <TextInput
+            placeholder="Enter Phone Number"
+            errorStyle={{color: 'red'}}
+            name="phone"
+            value={userInfo?.phone}
+            onChangeText={text => handleChange('phone', text)}
+            style={styles.input}
+            keyboardType="numeric"
+          />
+        </View>
+        <View style={{marginVertical: 10}}>
+          <TextInput
+            placeholder="Enter Your Gender"
+            errorStyle={{color: 'red'}}
+            name="gender"
+            value={userInfo?.gender}
+            onChangeText={text => handleChange('gender', text)}
+            style={styles.input}
+          />
+        </View>
 
-        <TouchableOpacity onPress={signupBtn}>
+        <TouchableOpacity onPress={onSubmit}>
           <Text style={styles.loginBtn}>Signup</Text>
         </TouchableOpacity>
         <TouchableOpacity>
@@ -161,3 +184,5 @@ const styles = StyleSheet.create({
 });
 
 export default Signup;
+
+//how to create registration form in react native using usestate hook with objects?

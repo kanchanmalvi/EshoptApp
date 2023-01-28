@@ -14,6 +14,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import selectCategoryOptions from '../../../Assets/constantData/category';
 import DocumentPicker from 'react-native-document-picker';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
 const AddProduct = () => {
   const [isFocus, setIsFocus] = useState(false);
@@ -37,7 +38,24 @@ const AddProduct = () => {
     },
   });
   const onSubmit = async data => {
-    console.log(data, 'formdata');
+    const body = {
+      name: 'Adi',
+      email: 'aditya@gmail.com',
+      phone: 7565637564,
+      password: '12345678',
+      confirmPassword: '12345678',
+      gender: 'Male',
+    };
+
+    try {
+      const res = axios.post('http://localhost:5000/register', {
+        body,
+        'Content-Type': 'application/json',
+      });
+      console.log(res, 'api response');
+    } catch (error) {
+      console.log(error, 'api error');
+    }
   };
 
   //image picker
@@ -267,6 +285,10 @@ const AddProduct = () => {
           <Text style={{color: 'white', textAlign: 'center'}}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      <TouchableOpacity onPress={() => Navigation.navigate('register')}>
+        <Text>Login page</Text>
+      </TouchableOpacity>
     </View>
   );
 };

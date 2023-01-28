@@ -1,135 +1,89 @@
-import React, {useState, useEffect} from 'react';
 import {
-  StyleSheet,
   View,
-  Text,
+  Alert,
+  StyleSheet,
   TouchableOpacity,
   ScrollView,
   TextInput,
-  ToastAndroid,
+  Text,
 } from 'react-native';
-import LogoEcom from '../../components/LogoEcom';
+import {useForm, Controller} from 'react-hook-form';
+import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import LogoEcom from '../../components/LogoEcom';
 import CheckBox from '@react-native-community/checkbox';
-import auth from '@react-native-firebase/auth';
-import {
-  GoogleSigninButton,
-  GoogleSignin,
-} from '@react-native-google-signin/google-signin';
-import Container, {Toast} from 'toastify-react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // for async storage
-  const [getEmailValue, setGetEmailValue] = useState('');
-  const [getPassValue, setGetPassValue] = useState('');
-
   const Navigation = useNavigation();
-
-  //form submit
-  const submit = () => {
-    if (!email) {
-      alert('Please fill the data');
-    } else if (!password) {
-      null;
-    } else {
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          setTimeout(() => {
-            setEmail(''), setPassword('');
-            AsyncStorage.setItem('email', email);
-            AsyncStorage.setItem('password', password);
-            Navigation.navigate('adminaddfrom', {
-              email: getEmailValue,
-              password: getPassValue,
-            });
-            ToastAndroid.showWithGravity(
-              'User Login Successfully.',
-              ToastAndroid.SHORT,
-              ToastAndroid.CENTER,
-            );
-          }, 1000);
-          console.log('User account created & signed in!');
-        })
-        .catch(error => {
-          ToastAndroid.showWithGravity(
-            error.message,
-            ToastAndroid.SHORT,
-            ToastAndroid.CENTER,
-          );
-        });
-    }
-  };
-  const getData = () => {
-    AsyncStorage.getItem('email').then(value => setGetEmailValue(value));
-    AsyncStorage.getItem('password').then(value => setGetPassValue(value));
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-  useEffect(() => {
-    if (getEmailValue && getPassValue) {
-      Navigation.navigate('adminaddfrom', {
-        email: getEmailValue,
-        password: getPassValue,
-      });
-    }
-  }, [getEmailValue, getPassValue]);
-  console.log(getEmailValue, getPassValue, 'getData');
-  //Google Authentication
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '317417769843-m862h2gt4hf31alpuagnhm0ed9h9g8sf.apps.googleusercontent.com',
-    });
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: {errors},
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
-
-  async function onGoogleButtonPress() {
-    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-    console.log(GoogleSignin, 'GoogleSignin');
-    const {idToken} = await GoogleSignin.signIn();
-    console.log(idToken, 'idToken');
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    console.log(googleCredential, 'googleCredential');
-
-    return auth().signInWithCredential(googleCredential);
-  }
-
+  const onSubmit = async data => {};
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <LogoEcom />
       <View style={styles.loginContainer}>
         <View style={{marginVertical: 5}}>
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="Enter User Email"
-            errorStyle={{color: 'red'}}
-            value={email}
-            onChangeText={e => {
-              setEmail(e);
+          <Controller
+            control={control}
+            rules={{
+              required: true,
             }}
-            style={styles.input}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Enter User Email"
+                errorStyle={{color: 'red'}}
+                style={styles.input}
+              />
+            )}
+            name="email"
           />
+
+          {errors.email && (
+            <Text style={{color: 'red'}}>This is required.</Text>
+          )}
         </View>
+
         <View style={{marginVertical: 5}}>
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
-            placeholder="Enter User Password"
-            errorStyle={{color: 'red'}}
-            value={password}
-            onChangeText={e => {
-              setPassword(e);
+          <Controller
+            control={control}
+            rules={{
+              required: true,
             }}
-            style={styles.input}
+            render={({field: {onChange, onBlur, value}}) => (
+              <TextInput
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Enter User Password"
+                errorStyle={{color: 'red'}}
+                style={styles.input}
+                secureTextEntry={true}
+              />
+            )}
+            name="password"
           />
+
+          {errors.password && (
+            <Text style={{color: 'red'}}>This is required.</Text>
+          )}
           <View style={styles.termscondition}>
             <View style={{flexDirection: 'row'}}>
               <CheckBox
@@ -144,7 +98,9 @@ const Login = () => {
           </View>
         </View>
 
-        <TouchableOpacity onPress={submit} disabled={!toggleCheckBox}>
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          disabled={!toggleCheckBox}>
           <Text
             style={[
               styles.loginBtn,
@@ -153,27 +109,6 @@ const Login = () => {
             Login
           </Text>
         </TouchableOpacity>
-        <Container position="top" />
-        <View
-          style={{
-            display: 'flex',
-            textAlign: 'center',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-          }}>
-          <Text>
-            <GoogleSigninButton
-              style={{height: 50}}
-              size={GoogleSigninButton.Size.Wide}
-              color={GoogleSigninButton.Color.Dark}
-              onPress={() =>
-                onGoogleButtonPress().then(() =>
-                  console.log('Signed in with Google!'),
-                )
-              }
-            />
-          </Text>
-        </View>
         <TouchableOpacity>
           <Text style={styles.forgotBtn}>Forgot Password</Text>
         </TouchableOpacity>
@@ -191,6 +126,8 @@ const Login = () => {
     </ScrollView>
   );
 };
+
+export default Login;
 
 const styles = StyleSheet.create({
   loginBtn: {
@@ -247,5 +184,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export default Login;
