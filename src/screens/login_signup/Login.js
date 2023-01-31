@@ -1,26 +1,29 @@
 import {
   View,
-  Alert,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ToastAndroid,
   TextInput,
   Text,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
-import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import LogoEcom from '../../components/LogoEcom';
 import CheckBox from '@react-native-community/checkbox';
-
+import {useDispatch} from 'react-redux';
+import {setToken} from '../../features/AuthToken/LoginTokenSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = () => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const Navigation = useNavigation();
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
-    setValue,
+    reset,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -28,7 +31,68 @@ const Login = () => {
       password: '',
     },
   });
-  const onSubmit = async data => {};
+  async function toLocalstore(res) {
+    try {
+      await AsyncStorage.setItem('token', JSON.stringify(res.data));
+      console.log('success Token');
+    } catch (error) {
+      console.log(error, 'token error');
+    }
+  }
+
+  function toNavigation() {
+    Navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{name: 'adminaddfrom'}],
+      }),
+    );
+  }
+  const onsubmit = async data => {
+    try {
+      let url = 'http://10.0.2.2:5000/login';
+      let body = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await axios.post(url, body, null, 'login');
+      console.log(res, 'api response');
+      reset();
+      await updateRedux(res.data.data);
+      await toLocalstore(res.data);
+      Navigation.navigate('adminaddfrom');
+    } catch (error) {
+      alert('Invalid Credientials');
+      console.log(error, 'error');
+    }
+  };
+
+  const asyncData = async () => {
+    try {
+      let getValue = await AsyncStorage.getItem('token');
+      console.log(getValue, 'success GetMsg');
+      if (getValue != null) {
+        updateRedux(getValue);
+        toNavigation();
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.log(error, 'token error');
+      return false;
+    }
+  };
+  useEffect(() => {
+    asyncData();
+  }, []);
+
+  const updateRedux = async data => {
+    if (typeof data == 'string') {
+      data = JSON.parse(data);
+    }
+    dispatch(setToken(data));
+  };
+
   return (
     <ScrollView style={{backgroundColor: 'white', height: '100%'}}>
       <LogoEcom />
@@ -54,9 +118,11 @@ const Login = () => {
             name="email"
           />
 
-          {errors.email && (
-            <Text style={{color: 'red'}}>This is required.</Text>
-          )}
+          <View style={{marginHorizontal: 10}}>
+            {errors.email && (
+              <Text style={{color: 'red'}}>This is required.</Text>
+            )}
+          </View>
         </View>
 
         <View style={{marginVertical: 5}}>
@@ -80,10 +146,12 @@ const Login = () => {
             )}
             name="password"
           />
+          <View style={{marginHorizontal: 10}}>
+            {errors.password && (
+              <Text style={{color: 'red'}}>This is required.</Text>
+            )}
+          </View>
 
-          {errors.password && (
-            <Text style={{color: 'red'}}>This is required.</Text>
-          )}
           <View style={styles.termscondition}>
             <View style={{flexDirection: 'row'}}>
               <CheckBox
@@ -99,7 +167,7 @@ const Login = () => {
         </View>
 
         <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onsubmit)}
           disabled={!toggleCheckBox}>
           <Text
             style={[
@@ -184,3 +252,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+//how to store token in redux toolkit using AsyncStorage in react native?
+
+//Error while saving the token Error: [AsyncStorage] Passing null/undefined as value is not supported. If you want to remove value, Use .removeItem method instead.Passed value: undefined Passed key: token?

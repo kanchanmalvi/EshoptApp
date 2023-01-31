@@ -21,7 +21,6 @@ const Signup = () => {
     confirmPassword: '',
     gender: '',
   });
-
   const Navigation = useNavigation();
 
   const handleChange = (name, value) => {
@@ -38,8 +37,6 @@ const Signup = () => {
       confirmPassword: confirmPassword,
       gender: gender,
     };
-    console.log(body, 'xfdfdg');
-
     let headersObj = {
       headers: {
         Accept: '*/*',
@@ -50,7 +47,20 @@ const Signup = () => {
       let url = 'http://10.0.2.2:5000/register';
       let res = await axios.post(url, body, headersObj);
       console.log(res, 'api response create');
+      ToastAndroid.showWithGravity(
+        'User Register Successfully.',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      );
       Navigation.navigate('login');
+      setUserInfo({
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+        gender: '',
+      });
     } catch (error) {
       console.log(error, 'error');
     }

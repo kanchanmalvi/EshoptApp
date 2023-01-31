@@ -4,15 +4,17 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {TouchableOpacity} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 const AdminScreen = () => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const Navigation = useNavigation();
+  const token = useSelector(state => state?.authtoken?.token?.token);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; //
+    return subscriber;
   }, []);
   function onAuthStateChanged(user) {
     setUser(user);
@@ -31,7 +33,7 @@ const AdminScreen = () => {
         <Text style={styles.heading}>Welcome To Admin Section</Text>
         <TouchableOpacity onPress={() => Navigation.navigate('login')}>
           <Text style={styles.subheading}>
-            {!user ? 'Login' : ' Explore Here'}
+            {token == true ? 'Login' : ' Explore Here'}
             <AntDesign name="arrowright" size={20} />
           </Text>
         </TouchableOpacity>

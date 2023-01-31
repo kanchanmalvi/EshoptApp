@@ -6,25 +6,30 @@ import {
   ScrollView,
   TextInput,
   Text,
+  Button,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import React, {useState} from 'react';
-import selectUnitOptions from '../../../Assets/constantData/unit';
 import {Dropdown} from 'react-native-element-dropdown';
 import selectCategoryOptions from '../../../Assets/constantData/category';
 import DocumentPicker from 'react-native-document-picker';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
+import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddProduct = () => {
   const [isFocus, setIsFocus] = useState(false);
   const [image, setImage] = useState(null);
   const Navigation = useNavigation();
 
+  const token = useSelector(state => state?.authtoken?.token?.token);
+  console.log(token, 'login token');
   const {
     control,
     handleSubmit,
     setValue,
+    reset,
     formState: {errors},
   } = useForm({
     defaultValues: {
@@ -33,28 +38,41 @@ const AddProduct = () => {
       company: '',
       price: '',
       quantity: '',
-      product_description: '',
+      description: '',
       image: '',
     },
   });
+
   const onSubmit = async data => {
-    const body = {
-      name: 'Adi',
-      email: 'aditya@gmail.com',
-      phone: 7565637564,
-      password: '12345678',
-      confirmPassword: '12345678',
-      gender: 'Male',
-    };
+    var formdata = new FormData();
+    for (const [key, value] of Object.entries(data)) {
+      if (key == 'category') {
+        formdata.append(key, value?.label);
+      } else if (key == 'image') {
+        formdata.append(key, value);
+      } else {
+        formdata.append(key, value);
+      }
+    }
+    console.log(formdata, 'formdata');
 
     try {
-      const res = axios.post('http://localhost:5000/register', {
-        body,
-        'Content-Type': 'application/json',
-      });
+      let url = 'http://10.0.2.2:5000/products/product';
+      let param = formdata;
+      let headersObj = {
+        headers: {
+          Accept: '*/*',
+          'Content-Type': 'multipart/form-data',
+          Authorization: 'jwt ' + token,
+        },
+      };
+      const res = await axios.post(url, param, headersObj, null, 'addproduct');
       console.log(res, 'api response');
+      Navigation.navigate('startscreen');
+      alert(res.data.msg);
+      reset();
     } catch (error) {
-      console.log(error, 'api error');
+      console.log(error, 'error');
     }
   };
 
@@ -75,6 +93,16 @@ const AddProduct = () => {
           ? 'Canceled'
           : 'Unknown Error: ' + JSON.stringify(error),
       );
+    }
+  };
+
+  const wibeasyncData = async () => {
+    try {
+      AsyncStorage.removeItem('token');
+      console.log('remove successfully');
+      Navigation.navigate('login');
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -250,9 +278,9 @@ const AddProduct = () => {
                   placeholder="Enter Description"
                 />
               )}
-              name="product_description"
+              name="description"
             />
-            {errors.product_description && <Text>This is required.</Text>}
+            {errors.description && <Text>This is required.</Text>}
           </View>
         </View>
         <View
@@ -285,10 +313,6 @@ const AddProduct = () => {
           <Text style={{color: 'white', textAlign: 'center'}}>Submit</Text>
         </TouchableOpacity>
       </ScrollView>
-
-      <TouchableOpacity onPress={() => Navigation.navigate('register')}>
-        <Text>Login page</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -312,7 +336,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'black',
   },
-
   inputSearchStyle: {
     height: 40,
     fontSize: 16,

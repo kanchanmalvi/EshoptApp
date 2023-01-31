@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import searchReducer from '../src/features/SearchingData/searchSlice';
 import wishListReducer from '../src/features/AddToCart/wishListSlice';
 import addProductReducer from '../src/features/AllProducts/AddProduct';
+import LoginTokenReducer from '../src/features/AuthToken/LoginTokenSlice';
 
 const persistConfig = {
   key: 'root',
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   productDetails: detailProductsReducer,
   wishList: wishListReducer,
   addProduct: addProductReducer,
+  authtoken: LoginTokenReducer,
 });
 
 let persistedReducer = persistReducer(persistConfig, rootReducer);
